@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import HeroSection from '../components/sections/Hero';
 import TechMarquee from '../components/sections/TechMarquee';
+import LiveDashboard from '../components/sections/LiveDashboard'; 
 
 // Import the logo directly from the assets folder so Vite bundles it
 import logoIcon from '../assets/logo.png';
@@ -31,7 +32,6 @@ export default function Home() {
 			  transition={{ delay: 0.2, duration: 0.8 }}
 			  className="flex flex-col items-center"
 			>
-			  {/* Using the imported logoIcon here */}
 			  <img 
 				src={logoIcon} 
 				alt="OPERIX" 
@@ -55,6 +55,7 @@ export default function Home() {
 
 	  <HeroSection />
 	  <TechMarquee />
+	  <LiveDashboard /> 
 	</div>
   );
 }

@@ -33,3 +33,12 @@
   --login-anim-dur: 10s;
   --login-anim-delay: 0s;
 }
+/* Fix Leaflet Popups for Dark Theme */
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background-color: #0a0a0a !important; /* vercel-surface */
+  border: 1px solid #333333 !important; /* vercel-border */
+  color: #ffffff !important;
+}
+.leaflet-container a.leaflet-popup-close-button {
+  color: #d4af37 !important; /* brand-gold */
+}
