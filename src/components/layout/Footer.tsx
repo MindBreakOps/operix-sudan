@@ -3,7 +3,7 @@ import { Mail, Phone, MapPin, MessageCircle, AtSign, Globe } from 'lucide-react'
 import { useLanguage } from '../../context/LanguageContext';
 import { Link } from 'react-router-dom';
 
-// Custom Social SVGs[cite: 12]
+// Custom Social SVGs
 const YTIcon = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>);
 const XIcon = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768m2.46-2.46l6.772-6.772"/></svg>);
 const FBIcon = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>);
@@ -13,11 +13,11 @@ export default function Footer() {
   const { isAr } = useLanguage();
 
   const contacts = [
-	{ email: 'info@operix-solutions.com', loc: 'Riyadh, SA & Khartoum , SD ', label: isAr ? 'المقر الرئيسي' : 'Headquarters' },
-	{ email: 'support@operix-solutions.com', loc: 'Riyadh, SA & Khartoum , SD ', label: isAr ? 'الدعم التقني' : 'Technical Support' },
-	{ email: 'subscription@operix-solutions.com', loc: ' Riyadh, SA & Khartoum , SD ', label: isAr ? 'الاشتراكات' : 'Subscriptions' },
+	{ email: 'info@operix-solutions.com', loc: 'Riyadh, SA & Khartoum, SD', label: isAr ? 'المقر الرئيسي' : 'Headquarters' },
+	{ email: 'support@operix-solutions.com', loc: 'Riyadh, SA & Khartoum, SD', label: isAr ? 'الدعم التقني' : 'Technical Support' },
+	{ email: 'subscription@operix-solutions.com', loc: 'Riyadh, SA & Khartoum, SD', label: isAr ? 'الاشتراكات' : 'Subscriptions' },
 	{ email: 'sudan.office@operix-solutions.com', loc: 'Khartoum, Sudan', label: isAr ? 'المكتب السوداني' : 'Sudan Office' },
-  ]; //[cite: 12]
+  ];
 
   const socials = [
 	{ href: 'https://whatsapp.com/channel/0029VbCjmxEChq6KQEBPiX1C', Icon: MessageCircle, bg: 'bg-[#25D366]', title: 'WhatsApp Channel' },
@@ -27,15 +27,24 @@ export default function Footer() {
 	{ href: 'https://www.instagram.com/operix.solutions/', Icon: IGIcon, bg: 'bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888]', title: 'Instagram' },
 	{ href: 'https://www.youtube.com/@Operix.Solutions', Icon: YTIcon, bg: 'bg-[#FF0000]', title: 'YouTube' },
 	{ href: 'https://www.threads.com/@operix.solutions', Icon: AtSign, bg: 'bg-black border border-vercel-border', title: 'Threads' },
-  ]; //[cite: 12]
+  ];
+
+  // Fast direct links matching the Header
+  const quickLinks = [
+	{ path: '/', labelEn: 'Home', labelAr: 'الرئيسية' },
+	{ path: '/about', labelEn: 'About', labelAr: 'من نحن' },
+	{ path: '/services', labelEn: 'Services', labelAr: 'خدماتنا' },
+	{ path: '/products', labelEn: 'Products', labelAr: 'منتجاتنا' },
+	{ path: '/contact', labelEn: 'Contact', labelAr: 'تواصل' },
+  ];
 
   return (
 	<footer className="w-full bg-vercel-surface border-t border-vercel-border transition-colors duration-500">
 	  <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-10">
 		<div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
 		  
-		  {/* Brand & Contacts */}
-		  <div className="lg:col-span-5 space-y-8">
+		  {/* Brand & Contacts (Adjusted to col-span-4 to make room for links) */}
+		  <div className="lg:col-span-4 space-y-8">
 			<Link to="/" className="text-2xl font-black tracking-tighter flex items-center gap-1">
 			  <span className="text-vercel-surface-text">OPERIX</span> 
 			  <span className="text-brand-yellow drop-shadow-[0_0_10px_rgba(250,204,21,0.3)]">249</span>
@@ -61,8 +70,27 @@ export default function Footer() {
 			</div>
 		  </div>
 
+		  {/* Quick Links */}
+		  <div className="lg:col-span-3 space-y-6 lg:pl-8">
+			<h4 className="text-[10px] font-black uppercase tracking-[0.25em] text-brand-yellow">
+			  {isAr ? 'روابط سريعة' : 'QUICK LINKS'}
+			</h4>
+			<div className="flex flex-col space-y-4">
+			  {quickLinks.map((link, idx) => (
+				<Link 
+				  key={idx} 
+				  to={link.path} 
+				  className="text-sm font-bold text-vercel-muted hover:text-brand-yellow transition-colors w-fit flex items-center gap-2"
+				>
+				  <div className="w-1.5 h-1.5 rounded-full bg-brand-yellow/50"></div>
+				  {isAr ? link.labelAr : link.labelEn}
+				</Link>
+			  ))}
+			</div>
+		  </div>
+
 		  {/* Social Links & Status */}
-		  <div className="lg:col-span-7 flex flex-col items-start lg:items-end justify-between">
+		  <div className="lg:col-span-5 flex flex-col items-start lg:items-end justify-between">
 			<div className="w-full lg:text-right">
 			  <h4 className="text-[10px] font-black uppercase tracking-[0.25em] text-brand-yellow mb-4">
 				{isAr ? 'التواصل الاجتماعي' : 'SOCIAL CONNECT'}
@@ -84,10 +112,15 @@ export default function Footer() {
 				</span>
 				{isAr ? 'جميع الأنظمة تعمل' : 'All Systems Operational'}
 			  </div>
-			  <p>&copy; {new Date().getFullYear()} OPERIX Solutions. {isAr ? 'جميع الحقوق محفوظة.' : 'All rights reserved.'}</p>
-			  <Globe size={14} className="text-brand-yellow" />
+			  
+			  {/* Updated Copyright string */}
+			  <p className="text-center sm:text-left">
+				&copy; {new Date().getFullYear()} {isAr ? 'جميع حقوق الطبع والنشر محفوظة. أوبيركس سوليوشنز.' : 'All copyrights reserved. OPERIX Solutions.'}
+			  </p>
+			  <Globe size={14} className="text-brand-yellow hidden sm:block" />
 			</div>
 		  </div>
+		  
 		</div>
 	  </div>
 	</footer>
