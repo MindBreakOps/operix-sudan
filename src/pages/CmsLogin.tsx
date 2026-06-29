@@ -80,7 +80,13 @@ export default function CmsLogin() {
 
 	  {/* Ambient orbs */}
 	  <div className="orb absolute w-[500px] h-[500px] rounded-full pointer-events-none"
-		style={{ background: 'radial-gradient(ellipse, rgba(234,179,8,0.2) 0%, transparent 65%)', top: '-10%', left: '-10%', '--dur': '10s', '--delay': '0s' as any }} />
+		style={{ 
+  background: 'radial-gradient(ellipse, rgba(234,179,8,0.2) 0%, transparent 65%)', 
+  top: '-10%', 
+  left: '-10%', 
+  '--dur': '10s', 
+  '--delay': '0s' 
+} as React.CSSProperties} />
 	  <div className="orb absolute w-[360px] h-[360px] rounded-full pointer-events-none"
 		style={{ background: 'radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 65%)', bottom: '5%', right: '5%', '--dur': '13s', '--delay': '-4s' as any }} />
 
