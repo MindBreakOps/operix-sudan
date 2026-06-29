@@ -81,13 +81,18 @@ export default function CmsLogin() {
 	  {/* Ambient orbs */}
 	  <div className="orb absolute w-[500px] h-[500px] rounded-full pointer-events-none"
 		style={{ 
-  background: 'radial-gradient(ellipse, rgba(234,179,8,0.2) 0%, transparent 65%)', 
-  top: '-10%', 
-  left: '-10%' 
-} as React.CSSProperties & Record<string, string>} />
+		  background: 'radial-gradient(ellipse, rgba(234,179,8,0.2) 0%, transparent 65%)', 
+		  top: '-10%', 
+		  left: '-10%',
+		  animationDuration: '10s' 
+		}} />
 	  <div className="orb absolute w-[360px] h-[360px] rounded-full pointer-events-none"
-		style={{ background: 'radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 65%)', bottom: '5%', right: '5%', '--dur': '13s', '--delay': '-4s' as any }} />
-
+		style={{ 
+		  background: 'radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 65%)', 
+		  bottom: '5%', 
+		  right: '5%',
+		  animationDuration: '13s'
+		}} />
 	  {/* Grid */}
 	  <div className="grid-bg absolute inset-0 pointer-events-none"
 		style={{

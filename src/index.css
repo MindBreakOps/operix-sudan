@@ -27,3 +27,8 @@
   body { @apply bg-vercel-bg text-vercel-text transition-colors duration-500; }
   h1, h2, h3 { @apply font-black tracking-tighter; }
 }
+/* Custom Login Animations */
+:root {
+  --login-anim-dur: 10s;
+  --login-anim-delay: 0s;
+}
