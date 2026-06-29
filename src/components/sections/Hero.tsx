@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, ClipboardCheck, HeartHandshake, Code2, ArrowUpLeft } from 'lucide-react';
+// Added ExternalLink to your imports
+import { Users, ClipboardCheck, HeartHandshake, Code2, ArrowUpLeft, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import StartProjectModal from '../ui/StartProjectModal';
 
@@ -25,12 +26,6 @@ export default function HeroSection() {
 		  {/* Gradient Overlay to ensure text readability */}
 		  <div className="absolute inset-0 bg-gradient-to-r from-vercel-bg via-vercel-bg/80 to-vercel-bg/20 transition-colors duration-500"></div>
 		</div>
-	
-		<div className="mt-8 flex items-center gap-4">
-		  <a href="https://www.operix-solutions.com" className="text-brand-gold font-bold underline underline-offset-4 decoration-brand-gold/50">
-			{isAr ? "زيارة الموقع الرئيسي OPERIX Solutions" : "Visit Main OPERIX Solutions Site"}
-		  </a>
-		</div>
 
 		<div className="max-w-[1400px] mx-auto w-full px-6 md:px-16 z-10 flex flex-col flex-grow justify-center py-20">
 		  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -48,7 +43,7 @@ export default function HeroSection() {
 				</span>
 			  </div>
 
-			  <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-vercel-base leading-[1.2] mb-6 font-serif transition-colors duration-500">
+			  <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-vercel-text leading-[1.2] mb-6 font-serif transition-colors duration-500">
 				{isAr ? (
 				  <>وسط التحديات، نكون <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-yellow to-brand-amber">سندك التقني</span></>
 				) : (
@@ -56,12 +51,13 @@ export default function HeroSection() {
 				)}
 			  </h1>
 			  
-			  <p className="text-vercel-muted text-lg md:text-xl mb-10 max-w-2xl leading-relaxed font-medium transition-colors duration-500">
+			  <p className="text-vercel-text/80 text-lg md:text-xl mb-10 max-w-2xl leading-relaxed font-medium transition-colors duration-500">
 				{isAr 
 				  ? "نحن نفهم تماماً ما تمر به أعمالك. في أوبيركس ٢٤٩، نحن لسنا مجرد شركة برمجيات، بل إخوة وشركاء نجاح. نصمم أنظمة تحمي بياناتك، وتسهل إدارتك، لتعود أقوى مما كنت."
 				  : "We deeply understand what your business is going through. At OPERIX 249, we aren't just a software company; we are partners in your success. We design systems that protect your data and simplify your management, so you can return stronger than ever."}
 			  </p>
 
+			  {/* Added the secondary button for the main branch here */}
 			  <div className="flex flex-wrap items-center gap-4">
 				<button 
 				  onClick={() => setIsModalOpen(true)}
@@ -70,6 +66,16 @@ export default function HeroSection() {
 				  <span>{isAr ? "ابدأ رحلة التعافي معنا" : "Start Your Recovery Journey"}</span>
 				  <ArrowUpLeft className="w-5 h-5 group-hover:-translate-x-1 group-hover:-translate-y-1 transition-transform" />
 				</button>
+				
+				<a 
+				  href="https://www.operix-solutions.com"
+				  target="_blank"
+				  rel="noopener noreferrer"
+				  className="flex items-center justify-center gap-2 bg-vercel-surface border border-vercel-border text-vercel-text font-bold px-8 py-4 rounded-xl hover:border-brand-gold hover:bg-vercel-bg transition-all duration-300 group"
+				>
+				  <span>{isAr ? "الموقع الرئيسي OPERIX" : "Main OPERIX Branch"}</span>
+				  <ExternalLink className="w-4 h-4 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
+				</a>
 			  </div>
 			</motion.div>
 		  </div>
@@ -95,8 +101,8 @@ export default function HeroSection() {
 					<stat.icon className="w-5 h-5 text-brand-yellow" />
 				  </div>
 				  <div>
-					<h4 className="text-xl font-bold text-vercel-surface-text tracking-tight transition-colors duration-500">{stat.val}</h4>
-					<p className="text-xs text-vercel-muted font-medium transition-colors duration-500">{stat.title}</p>
+					<h4 className="text-xl font-bold text-vercel-text tracking-tight transition-colors duration-500">{stat.val}</h4>
+					<p className="text-xs text-vercel-text/60 font-medium transition-colors duration-500">{stat.title}</p>
 				  </div>
 				</div>
 			  ))}
