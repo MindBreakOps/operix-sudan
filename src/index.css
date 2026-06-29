@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;800&display=swap');
+
+@theme {
+  --color-vercel-bg: var(--bg);       
+  --color-vercel-surface: var(--surface);  
+  --color-vercel-border: var(--border);   
+  --color-brand-gold: #d4af37;    /* Premium Metallic Gold */
+  --color-vercel-text: var(--text);     
+
+  --font-sans: 'Inter', 'Cairo', sans-serif;
+}
+
+@layer base {
+  :root, .dark {
+	--bg: #000000;
+	--surface: #0a0a0a;
+	--border: #333333;
+	--text: #ffffff;
+  }
+  .light {
+	--bg: #ffffff;
+	--surface: #0B1120; /* Navy Blue Frames */
+	--border: #1E293B;
+	--text: #000000;
+  }
+  body { @apply bg-vercel-bg text-vercel-text transition-colors duration-500; }
+  h1, h2, h3 { @apply font-black tracking-tighter; }
+}
