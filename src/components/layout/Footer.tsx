@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin, MessageCircle, AtSign, Globe, ArrowUpRight } from 'lucide-react';
+import { Mail, Phone, MapPin, AtSign, Globe, ArrowUpRight, Settings, Users, FileCheck, Activity, GraduationCap } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -14,11 +14,19 @@ const WAIcon  = () => (<svg width="17" height="17" viewBox="0 0 24 24" fill="non
 export default function Footer() {
   const { isAr } = useLanguage();
 
+  const cloudPortals = [
+	{ href: 'https://www.ops.operix-solutions.online',  Icon: Settings,      labelEn: 'OPERIX Operations', labelAr: 'أوبيريكس للعمليات' },
+	{ href: 'https://www.hris.operix-solutions.online', Icon: Users,         labelEn: 'OPERIX HRIS',       labelAr: 'أوبيريكس للموارد' },
+	{ href: 'https://www.fmis.operix-solutions.online', Icon: FileCheck,     labelEn: 'OPERIX FMIS',       labelAr: 'أوبيريكس للمالية' },
+	{ href: 'https://www.care.operix-solutions.online', Icon: Activity,      labelEn: 'Shifa Care',        labelAr: 'نظام شفاء' },
+	{ href: 'https://www.edu.operix-solutions.online',  Icon: GraduationCap, labelEn: 'OPERIX Edu',        labelAr: 'أوبيريكس للتعليم' },
+  ];
+
   const contacts = [
-	{ email: 'info@operix-solutions.com',         label: isAr ? 'المقر الرئيسي'    : 'Headquarters',      loc: 'Riyadh, SA · Khartoum, SD' },
-	{ email: 'support@operix-solutions.com',      label: isAr ? 'الدعم التقني'     : 'Technical Support', loc: 'Riyadh, SA · Khartoum, SD' },
-	{ email: 'subscription@operix-solutions.com', label: isAr ? 'الاشتراكات'       : 'Subscriptions',     loc: 'Riyadh, SA · Khartoum, SD' },
-	{ email: 'sudan.office@operix-solutions.com', label: isAr ? 'المكتب السوداني'  : 'Sudan Office',      loc: 'Khartoum, Sudan'           },
+	{ email: 'info@operix-solutions.com',         labelEn: 'Headquarters',      labelAr: 'المقر الرئيسي',      loc: 'Riyadh, SA · Khartoum, SD' },
+	{ email: 'support@operix-solutions.com',      labelEn: 'Technical Support', labelAr: 'الدعم التقني',       loc: 'Riyadh, SA · Khartoum, SD' },
+	{ email: 'subscription@operix-solutions.com', labelEn: 'Subscriptions',     labelAr: 'الاشتراكات',         loc: 'Riyadh, SA · Khartoum, SD' },
+	{ email: 'sudan.office@operix-solutions.com', labelEn: 'Sudan Office',      labelAr: 'المكتب السوداني',    loc: 'Khartoum, Sudan'           },
   ];
 
   const socials = [
@@ -26,9 +34,9 @@ export default function Footer() {
 	{ href: 'https://wa.me/966500823643',                            Icon: Phone,          bg: '#128C7E',  title: 'WhatsApp Business' },
 	{ href: 'https://x.com/operixsolutions?s=11',                    Icon: XIcon,          bg: '#1A1A2E',  title: 'X (Twitter)'       },
 	{ href: 'https://www.facebook.com/share/1BoQkRsiJB/',            Icon: FBIcon,         bg: '#1877F2',  title: 'Facebook'          },
-	{ href: 'https://www.instagram.com/operix.solutions/',            Icon: IGIcon,         bg: 'none',     title: 'Instagram'         },
-	{ href: 'https://www.youtube.com/@Operix.Solutions',              Icon: YTIcon,         bg: '#EF4444',  title: 'YouTube'           },
-	{ href: 'https://www.threads.com/@operix.solutions',              Icon: AtSign,         bg: '#1A1A2E',  title: 'Threads'           },
+	{ href: 'https://www.instagram.com/operix.solutions/',           Icon: IGIcon,         bg: 'none',     title: 'Instagram'         },
+	{ href: 'https://www.youtube.com/@Operix.Solutions',             Icon: YTIcon,         bg: '#EF4444',  title: 'YouTube'           },
+	{ href: 'https://www.threads.com/@operix.solutions',             Icon: AtSign,         bg: '#1A1A2E',  title: 'Threads'           },
   ];
 
   const quickLinks = [
@@ -47,15 +55,53 @@ export default function Footer() {
 	  {/* Top divider accent */}
 	  <div className="h-px bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent" />
 
+	  {/* ── LIVE CLOUD PORTALS STRIP ── */}
+	  <div className="border-b" style={{ borderColor: 'var(--border)', background: 'var(--bg)' }}>
+		<div className="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex flex-col lg:flex-row items-center gap-5 justify-center lg:justify-between">
+		  <span className={`uppercase text-brand-gold ${isAr ? 'font-black text-[12px] tracking-wide' : 'font-black text-[10px] tracking-[0.2em]'}`}>
+			{isAr ? 'البوابات السحابية المباشرة' : 'Live Cloud Portals'}
+		  </span>
+		  <div className="flex flex-wrap items-center justify-center gap-3">
+			{cloudPortals.map(({ href, Icon, labelEn, labelAr }) => (
+			  <a
+				key={href}
+				href={href}
+				target="_blank"
+				rel="noreferrer"
+				className="group flex items-center gap-2 px-3 py-2 rounded-lg border transition-all duration-200"
+				style={{
+				  borderColor: 'var(--border)',
+				  background: 'transparent',
+				}}
+				onMouseEnter={(e) => {
+				  e.currentTarget.style.borderColor = '#D4AF37';
+				  e.currentTarget.style.background = 'rgba(212, 175, 55, 0.05)';
+				}}
+				onMouseLeave={(e) => {
+				  e.currentTarget.style.borderColor = 'var(--border)';
+				  e.currentTarget.style.background = 'transparent';
+				}}
+			  >
+				<Icon size={15} className="transition-colors duration-200" style={{ color: '#D4AF37' }} />
+				<span className={`transition-colors duration-200 ${isAr ? 'text-xs font-black text-vercel-text opacity-90' : 'text-[10px] font-bold tracking-wide'}`} style={{ color: isAr ? '' : 'var(--text)' }}>
+				  {isAr ? labelAr : labelEn}
+				</span>
+			  </a>
+			))}
+		  </div>
+		</div>
+	  </div>
+
 	  <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-10">
 		<div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
 		  {/* ── Brand & Contacts ── */}
 		  <div className="lg:col-span-5 space-y-8">
 			<div>
-			  <Link to="/" className="inline-flex items-center gap-1 mb-3">
+			  {/* Force LTR direction here so "249" is always on the right side of "OPERIX" */}
+			  <Link to="/" dir="ltr" className="inline-flex items-center gap-1.5 mb-4">
 				<span
-				  className="text-2xl font-bold"
+				  className="text-2xl font-bold tracking-wide"
 				  style={{ color: 'var(--text)', fontFamily: 'var(--font-display)' }}
 				>
 				  OPERIX
@@ -74,8 +120,8 @@ export default function Footer() {
 				</span>
 			  </Link>
 			  <p
-				className="text-sm leading-relaxed max-w-sm"
-				style={{ color: 'var(--text-muted)', fontWeight: 500 }}
+				className={`leading-relaxed max-w-sm ${isAr ? 'text-base font-semibold text-vercel-text/90' : 'text-sm font-medium text-vercel-muted'}`}
+				style={{ color: isAr ? '' : 'var(--text-muted)' }}
 			  >
 				{isAr
 				  ? 'مجموعة قيادة مؤسسية موحدة تنسق العمليات، المسارات الطبية، ودورات حياة رأس المال البشري في مركز تحكم واحد.'
@@ -84,29 +130,28 @@ export default function Footer() {
 			</div>
 
 			{/* Contact list */}
-			<div className="space-y-5">
-			  {contacts.map(({ email, label, loc }) => (
+			<div className="space-y-6">
+			  {contacts.map(({ email, labelEn, labelAr, loc }) => (
 				<div key={email}>
 				  <span
-					className="text-[10px] font-black uppercase tracking-[0.2em]"
-					style={{ color: '#D4AF37' }}
+					className={`uppercase text-brand-gold ${isAr ? 'font-black text-[12px] tracking-wide' : 'font-black text-[10px] tracking-[0.2em]'}`}
 				  >
-					{label}
+					{isAr ? labelAr : labelEn}
 				  </span>
 				  <a
 					href={`mailto:${email}`}
-					className="flex items-center gap-2 text-sm font-mono mt-1 transition-colors duration-200"
+					className="flex items-center gap-2 text-sm font-mono mt-1.5 transition-colors duration-200"
 					style={{ color: 'var(--text)' }}
 					onMouseEnter={(e) => (e.currentTarget.style.color = '#D4AF37')}
 					onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text)')}
 				  >
-					<Mail size={13} style={{ color: '#D4AF37', opacity: 0.8, flexShrink: 0 }} />
+					<Mail size={14} style={{ color: '#D4AF37', opacity: 0.9, flexShrink: 0 }} />
 					{email}
 				  </a>
-				  <div className="flex items-center gap-1.5 mt-1 pl-5">
-					<MapPin size={11} style={{ color: 'var(--text-subtle)', flexShrink: 0 }} />
+				  <div className="flex items-center gap-1.5 mt-1.5 pl-6">
+					<MapPin size={12} style={{ color: 'var(--text-subtle)', flexShrink: 0 }} />
 					<span
-					  className="text-[10px] font-semibold uppercase tracking-wider"
+					  className={`uppercase tracking-wider ${isAr ? 'font-bold text-[11px]' : 'font-semibold text-[10px]'}`}
 					  style={{ color: 'var(--text-subtle)' }}
 					>
 					  {loc}
@@ -120,23 +165,22 @@ export default function Footer() {
 		  {/* ── Quick Links ── */}
 		  <div className="lg:col-span-2 space-y-6">
 			<h4
-			  className="text-[10px] font-black uppercase tracking-[0.2em]"
-			  style={{ color: '#D4AF37' }}
+			  className={`uppercase text-brand-gold ${isAr ? 'font-black text-[12px] tracking-wide' : 'font-black text-[10px] tracking-[0.2em]'}`}
 			>
 			  {isAr ? 'روابط سريعة' : 'Quick Links'}
 			</h4>
-			<nav className="flex flex-col gap-3">
+			<nav className="flex flex-col gap-4 mt-2">
 			  {quickLinks.map((link) => (
 				<Link
 				  key={link.path}
 				  to={link.path}
-				  className="group flex items-center gap-2 text-sm font-semibold w-fit transition-colors duration-200"
-				  style={{ color: 'var(--text-muted)' }}
+				  className={`group flex items-center gap-2 w-fit transition-colors duration-200 ${isAr ? 'text-[15px] font-bold text-vercel-text/80' : 'text-sm font-semibold'}`}
+				  style={{ color: isAr ? '' : 'var(--text-muted)' }}
 				  onMouseEnter={(e) => (e.currentTarget.style.color = '#D4AF37')}
-				  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+				  onMouseLeave={(e) => (e.currentTarget.style.color = isAr ? 'var(--text)' : 'var(--text-muted)')}
 				>
 				  <ArrowUpRight
-					size={13}
+					size={14}
 					className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0"
 					style={{ color: '#D4AF37' }}
 				  />
@@ -150,12 +194,11 @@ export default function Footer() {
 		  <div className="lg:col-span-5 flex flex-col gap-8">
 			<div>
 			  <h4
-				className="text-[10px] font-black uppercase tracking-[0.2em] mb-5"
-				style={{ color: '#D4AF37' }}
+				className={`uppercase text-brand-gold mb-5 ${isAr ? 'font-black text-[12px] tracking-wide' : 'font-black text-[10px] tracking-[0.2em]'}`}
 			  >
 				{isAr ? 'التواصل الاجتماعي' : 'Social Connect'}
 			  </h4>
-			  <div className="flex flex-wrap gap-2.5">
+			  <div className="flex flex-wrap gap-3">
 				{socials.map(({ href, Icon, bg, title }, idx) => (
 				  <motion.a
 					key={idx}
@@ -165,7 +208,7 @@ export default function Footer() {
 					title={title}
 					whileHover={{ scale: 1.1, y: -2 }}
 					whileTap={{ scale: 0.95 }}
-					className="w-10 h-10 flex items-center justify-center rounded-xl text-white shadow-md transition-shadow duration-300 hover:shadow-lg"
+					className="w-11 h-11 flex items-center justify-center rounded-xl text-white shadow-md transition-shadow duration-300 hover:shadow-lg"
 					style={{
 					  background:
 						bg === 'none'
@@ -181,23 +224,23 @@ export default function Footer() {
 
 			{/* System status */}
 			<div
-			  className="flex items-center gap-2 px-4 py-3 rounded-xl self-start"
+			  className="flex items-center gap-2.5 px-4 py-3 rounded-xl self-start mt-2"
 			  style={{
 				background: 'rgba(16, 185, 129, 0.08)',
 				border: '1px solid rgba(16, 185, 129, 0.2)',
 			  }}
 			>
-			  <span className="relative flex h-2 w-2 shrink-0">
+			  <span className="relative flex h-2.5 w-2.5 shrink-0">
 				<span
 				  className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
 				  style={{ background: '#10B981' }}
 				/>
 				<span
-				  className="relative inline-flex rounded-full h-2 w-2"
+				  className="relative inline-flex rounded-full h-2.5 w-2.5"
 				  style={{ background: '#10B981' }}
 				/>
 			  </span>
-			  <span className="text-xs font-bold" style={{ color: '#10B981' }}>
+			  <span className={`font-black ${isAr ? 'text-[13px]' : 'text-xs'}`} style={{ color: '#10B981' }}>
 				{isAr ? 'جميع الأنظمة تعمل' : 'All Systems Operational'}
 			  </span>
 			</div>
@@ -206,8 +249,8 @@ export default function Footer() {
 
 		{/* ── Bottom bar ── */}
 		<div
-		  className="mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold"
-		  style={{ borderTop: '1px solid var(--border)', color: 'var(--text-subtle)' }}
+		  className={`mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-semibold ${isAr ? 'text-[13px] text-vercel-text/70' : 'text-xs'}`}
+		  style={{ borderTop: '1px solid var(--border)', color: isAr ? '' : 'var(--text-subtle)' }}
 		>
 		  <p>
 			&copy; {new Date().getFullYear()}{' '}
@@ -215,8 +258,8 @@ export default function Footer() {
 			  ? 'جميع حقوق الطبع والنشر محفوظة — أوبيركس سوليوشنز'
 			  : 'All rights reserved — OPERIX Solutions'}
 		  </p>
-		  <div className="flex items-center gap-1.5">
-			<Globe size={13} style={{ color: '#D4AF37' }} />
+		  <div className="flex items-center gap-2" dir="ltr">
+			<Globe size={14} style={{ color: '#D4AF37' }} />
 			<span>operix-solutions.com</span>
 		  </div>
 		</div>

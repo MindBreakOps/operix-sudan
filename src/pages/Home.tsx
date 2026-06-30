@@ -3,8 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import HeroSection from '../components/sections/Hero';
 import TechMarquee from '../components/sections/TechMarquee';
 import LiveDashboard from '../components/sections/LiveDashboard';
-
-// 1. Import the Services and Portfolio components
 import Services from '../components/sections/Services';
 import Portfolio from '../components/sections/Portfolio';
 
@@ -36,35 +34,32 @@ export default function Home() {
 			  className="flex flex-col items-center"
 			>
 			  {/* Glow ring */}
-			  <div
-				className="relative w-24 h-24 flex items-center justify-center mb-7"
-			  >
+			  <div className="relative w-24 h-24 flex items-center justify-center mb-7">
 				<div
 				  className="absolute inset-0 rounded-full opacity-30 blur-xl animate-pulse"
 				  style={{ background: 'radial-gradient(circle, #D4AF37 0%, transparent 70%)' }}
 				/>
 				<img
 				  src={logoIcon}
-				  alt="OPERIX"
+				  alt="OPERIX Logo"
 				  className="relative w-20 h-20 object-contain"
 				  style={{ filter: 'drop-shadow(0 0 20px rgba(212,175,55,0.5))' }}
 				/>
 			  </div>
 
-			  {/* Wordmark */}
+			  {/* Wordmark - Forced LTR */}
 			  <div
-				className="flex items-center gap-1 mb-2"
+				className="flex items-center gap-2 mb-2"
 				style={{ fontFamily: 'var(--font-display)' }}
+				dir="ltr"
 			  >
 				<span
-				  className="text-4xl font-bold tracking-tight"
+				  className="text-4xl font-bold tracking-wide"
 				  style={{ color: 'var(--text)' }}
 				>
 				  OPERIX
 				</span>
-				<span
-				  className="text-4xl font-bold shimmer-text"
-				>
+				<span className="text-4xl font-bold shimmer-text">
 				  249
 				</span>
 			  </div>
@@ -103,11 +98,8 @@ export default function Home() {
 	  <HeroSection />
 	  <TechMarquee />
 	  <LiveDashboard />
-	  
-	  {/* 2. Render the sections here */}
 	  <Services />
 	  <Portfolio />
-	  
 	</div>
   );
 }

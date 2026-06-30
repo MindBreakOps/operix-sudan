@@ -49,20 +49,22 @@ export default function Header() {
 		<Link
 		  to="/"
 		  className="relative z-50 flex items-center gap-2.5 group select-none"
+		  dir="ltr"
 		  aria-label="OPERIX 249 — Home"
 		>
 		  <div className="relative">
 			<img
 			  src={logoIcon}
-			  alt=""
+			  alt="OPERIX Logo"
 			  className="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
 			/>
 			{/* Subtle gold glow behind logo on hover */}
 			<span className="absolute inset-0 rounded-full bg-brand-gold/20 blur-md scale-0 group-hover:scale-100 transition-transform duration-300 pointer-events-none" />
 		  </div>
-		  <div className="flex items-center gap-0.5 leading-none">
+		  {/* Forced LTR direction to prevent "249 OPERIX" flip in Arabic mode */}
+		  <div className="flex items-center gap-1.5 leading-none" dir="ltr">
 			<span
-			  className="text-xl font-bold tracking-tight"
+			  className="text-xl font-bold tracking-wide"
 			  style={{ color: 'var(--text)', fontFamily: 'var(--font-display)' }}
 			>
 			  OPERIX
@@ -90,10 +92,14 @@ export default function Header() {
 			  <Link
 				key={link.path}
 				to={link.path}
-				className={`relative px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${
+				className={`relative px-4 py-2 rounded-lg transition-all duration-200 ${
+				  isAr ? 'text-[15px] font-bold tracking-wide' : 'text-sm font-semibold'
+				} ${
 				  active
 					? 'text-brand-gold'
-					: 'text-[var(--text-muted)] hover:text-[var(--text)]'
+					: isAr
+					  ? 'text-[var(--text)] hover:text-brand-gold'
+					  : 'text-[var(--text-muted)] hover:text-[var(--text)]'
 				}`}
 			  >
 				{isAr ? link.labelAr : link.labelEn}
@@ -191,10 +197,14 @@ export default function Header() {
 				  >
 					<Link
 					  to={link.path}
-					  className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-base font-semibold transition-all duration-200 ${
+					  className={`flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-200 ${
+						isAr ? 'text-lg font-bold' : 'text-base font-semibold'
+					  } ${
 						active
 						  ? 'bg-brand-gold/10 text-brand-gold border border-brand-gold/20'
-						  : 'text-[var(--text-muted)] hover:bg-[var(--surface-2)] hover:text-[var(--text)]'
+						  : isAr
+							? 'text-[var(--text)] hover:bg-[var(--surface-2)] hover:text-brand-gold'
+							: 'text-[var(--text-muted)] hover:bg-[var(--surface-2)] hover:text-[var(--text)]'
 					  }`}
 					>
 					  {active && (
@@ -210,7 +220,9 @@ export default function Header() {
 			  <div className="mt-3 pt-3 border-t border-[var(--border)] flex items-center justify-between">
 				<Link
 				  to="/login"
-				  className="flex items-center gap-2 text-sm font-semibold text-[var(--text-muted)] hover:text-brand-gold transition-colors px-4 py-2"
+				  className={`flex items-center gap-2 px-4 py-2 transition-colors ${
+					isAr ? 'text-base font-bold text-[var(--text)] hover:text-brand-gold' : 'text-sm font-semibold text-[var(--text-muted)] hover:text-brand-gold'
+				  }`}
 				>
 				  <Lock size={14} />
 				  {isAr ? 'لوحة التحكم' : 'Admin Panel'}
