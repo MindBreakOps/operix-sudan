@@ -97,11 +97,11 @@ export default function LiveDashboard() {
 				center={[20.0, 40.0]} 
 				zoom={4} 
 				scrollWheelZoom={false}
-				attributionControl={false} /* <-- This completely hides the label */
 				style={{ height: '100%', width: '100%', backgroundColor: '#000000' }}
 			  >
 				<TileLayer
 				  url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+				  attribution='&copy; CartoDB'
 				/>
 				
 				{activeSignals.map((signal, idx) => (
