@@ -1,5 +1,5 @@
+
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { ShieldCheck, Activity, Users, LayoutGrid, Heart, Server } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -68,11 +68,7 @@ export default function Services() {
   return (
 	<section
 	  id="services"
-	  className="relative px-6 py-28 border-t"
-	  style={{
-		background:  'var(--bg)',
-		borderColor: 'var(--border)',
-	  }}
+	  className="relative px-6 py-28 border-t border-vercel-border bg-vercel-bg"
 	>
 	  {/* Background glow */}
 	  <div
@@ -88,111 +84,75 @@ export default function Services() {
 	  <div className="mx-auto max-w-7xl relative z-10">
 
 		{/* ── Header ── */}
-		<motion.div
-		  initial={{ opacity: 0, y: 30 }}
-		  whileInView={{ opacity: 1, y: 0 }}
-		  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-		  viewport={{ once: true }}
-		  className="mb-16"
-		>
+		<div className="mb-16 fade-up">
 		  <div className="flex items-center gap-3 mb-4">
 			<div className="h-px w-10 bg-brand-gold" />
 			<span className="tag-gold">
 			  {isAr ? 'ما نقدمه لك' : 'What We Offer'}
 			</span>
 		  </div>
-		  <h2
-			className="text-4xl md:text-5xl lg:text-6xl mb-5 max-w-xl"
-			style={{ color: 'var(--text)', fontFamily: 'var(--font-display)' }}
-		  >
+		  <h2 className="text-4xl md:text-5xl lg:text-6xl mb-5 max-w-xl text-vercel-text font-display font-black">
 			{isAr ? 'حلول تقنية تنبض بالحياة' : 'Tech Solutions with a Heartbeat'}
 		  </h2>
-		  <p
-			className="max-w-2xl text-base md:text-lg leading-relaxed"
-			style={{ color: 'var(--text-muted)', fontWeight: 500 }}
-		  >
+		  <p className="max-w-2xl text-base md:text-lg leading-relaxed text-vercel-muted font-medium">
 			{isAr
 			  ? 'صممنا حزم أوبريكس لتكون مرنة؛ يمكنك استخدامها كحزمة متكاملة أو كنظام مستقل، لتناسب احتياجك الحالي بالضبط.'
 			  : 'We designed OPERIX modules to be flexible — use them as a bundled ecosystem or standalone systems, fitting your exact current needs.'}
 		  </p>
-		</motion.div>
+		</div>
 
 		{/* ── Cards ── */}
 		<div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
 		  {items.map((service, i) => {
-			const Icon  = service.icon;
+			const Icon = service.icon;
 			const isHov = hovered === i;
 
 			return (
-			  <motion.div
+			  <div
 				key={service.title}
-				initial={{ opacity: 0, y: 36 }}
-				whileInView={{ opacity: 1, y: 0 }}
-				transition={{ delay: i * 0.09, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-				viewport={{ once: true }}
 				onMouseEnter={() => setHovered(i)}
 				onMouseLeave={() => setHovered(null)}
-				className="group relative overflow-hidden rounded-2xl border p-7"
+				className="group relative overflow-hidden rounded-2xl border p-7 bg-vercel-surface transition-all duration-300 fade-up"
 				style={{
-				  background:  'var(--surface)',
-				  borderColor: isHov ? `${service.accent}40` : 'var(--border)',
-				  transform:   isHov ? 'translateY(-3px)' : 'translateY(0)',
-				  boxShadow:   isHov
-					? `0 16px 48px rgba(${service.accentRgb},0.1)`
-					: 'none',
-				  transition:  'all 0.32s cubic-bezier(0.16, 1, 0.3, 1)',
+				  animationDelay: `${i * 100}ms`,
+				  borderColor: isHov ? `${service.accent}40` : 'var(--color-vercel-border)',
+				  transform: isHov ? 'translateY(-4px)' : 'translateY(0)',
+				  boxShadow: isHov ? `0 16px 48px rgba(${service.accentRgb},0.1)` : 'none',
 				}}
 			  >
 				{/* Radial glow overlay */}
 				<div
-				  className="absolute inset-0 pointer-events-none transition-opacity duration-400"
+				  className="absolute inset-0 pointer-events-none transition-opacity duration-300"
 				  style={{
 					background: `radial-gradient(ellipse 70% 50% at 50% 0%, rgba(${service.accentRgb},0.07) 0%, transparent 70%)`,
-					opacity:    isHov ? 1 : 0,
-				  }}
-				/>
-
-				{/* Gradient wash on hover */}
-				<div
-				  className="absolute inset-0 pointer-events-none transition-opacity duration-400"
-				  style={{
-					background: `linear-gradient(135deg, rgba(${service.accentRgb},0.04) 0%, transparent 60%)`,
-					opacity:    isHov ? 1 : 0,
+					opacity: isHov ? 1 : 0,
 				  }}
 				/>
 
 				<div className="relative z-10">
 				  {/* Icon */}
 				  <div
-					className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl transition-all duration-300"
+					className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl transition-all duration-300 bg-vercel-surface-2"
 					style={{
-					  background: isHov
-						? `rgba(${service.accentRgb},0.15)`
-						: 'var(--surface-2)',
-					  border: `1px solid ${isHov ? `rgba(${service.accentRgb},0.3)` : 'var(--border)'}`,
+					  background: isHov ? `rgba(${service.accentRgb},0.15)` : 'var(--color-vercel-surface-2)',
+					  border: `1px solid ${isHov ? `rgba(${service.accentRgb},0.3)` : 'var(--color-vercel-border)'}`,
 					}}
 				  >
-					<Icon
-					  size={26}
-					  style={{ color: service.accent }}
-					/>
+					<Icon size={26} style={{ color: service.accent }} />
 				  </div>
 
 				  <h3
-					className="mb-3 text-base font-bold leading-snug transition-colors duration-200"
-					style={{ color: isHov ? service.accent : 'var(--text)' }}
+					className="mb-3 text-lg font-bold leading-snug transition-colors duration-200"
+					style={{ color: isHov ? service.accent : 'var(--color-vercel-text)' }}
 				  >
 					{service.title}
 				  </h3>
 
-				  <p
-					className="text-sm leading-relaxed"
-					style={{ color: 'var(--text-muted)' }}
-				  >
+				  <p className="text-sm leading-relaxed text-vercel-muted">
 					{service.description}
 				  </p>
 				</div>
-			  </motion.div>
+			  </div>
 			);
 		  })}
 		</div>

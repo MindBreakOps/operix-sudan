@@ -95,11 +95,11 @@ export default function HeroSection() {
 				)}
 			  </motion.h1>
 
-			  {/* Sub-copy */}
+			  {/* Sub-copy - FIXED CONTRAST */}
 			  <motion.p
 				variants={itemVariants}
-				className="text-base md:text-lg mb-10 max-w-xl leading-relaxed"
-				style={{ color: 'var(--text-muted)', fontWeight: 500 }}
+				className={`text-base md:text-lg mb-10 max-w-xl leading-relaxed drop-shadow-md ${isAr ? 'font-bold' : 'font-semibold'}`}
+				style={{ color: 'var(--text)', opacity: 0.9 }}
 			  >
 				{isAr
 				  ? 'نحن نفهم تماماً ما تمر به أعمالك. في أوبيركس ٢٤٩، نحن لسنا مجرد شركة برمجيات — بل إخوة وشركاء نجاح. نصمم أنظمة تحمي بياناتك، وتسهل إدارتك، لتعود أقوى مما كنت.'

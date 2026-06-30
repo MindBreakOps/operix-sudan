@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { ShieldCheck, Lock, Mail, AlertTriangle, Eye, EyeOff } from 'lucide-react';
+import logoIcon from '../../assets/logo.png';
 
 export default function CmsLogin() {
   const navigate = useNavigate();
@@ -109,7 +110,7 @@ export default function CmsLogin() {
 			<div className="relative mb-4">
 			  <div className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center shadow-inner">
 				{/* Ensure logo.png is in your /public folder */}
-				<img src="/logo.png" alt={`${brandName} Logo`} className="w-8 h-8 object-contain" />
+				<img src="../../public/logo.png" alt={`${brandName} Logo`} className="w-8 h-8 object-contain" />
 			  </div>
 			</div>
 			<h1 className="text-lg font-black uppercase tracking-tight text-white mb-0.5">
