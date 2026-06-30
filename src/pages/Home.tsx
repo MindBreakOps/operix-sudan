@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import HeroSection from '../components/sections/Hero';
 import TechMarquee from '../components/sections/TechMarquee';
-import LiveDashboard from '../components/sections/LiveDashboard'; 
+import LiveDashboard from '../components/sections/LiveDashboard';
 
-// Import the logo directly from the assets folder so Vite bundles it
+// 1. Import the Services and Portfolio components
+import Services from '../components/sections/Services';
+import Portfolio from '../components/sections/Portfolio';
+
 import logoIcon from '../assets/logo.png';
 
 export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-	// Hide the splash screen after 2.5 seconds
-	const timer = setTimeout(() => setShowSplash(false), 2500);
+	const timer = setTimeout(() => setShowSplash(false), 2800);
 	return () => clearTimeout(timer);
   }, []);
 
@@ -20,32 +22,77 @@ export default function Home() {
 	<div className="w-full relative">
 	  <AnimatePresence>
 		{showSplash && (
-		  <motion.div 
+		  <motion.div
 			initial={{ opacity: 1 }}
-			exit={{ opacity: 0, scale: 1.05 }}
-			transition={{ duration: 0.8, ease: "easeInOut" }}
-			className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-vercel-bg"
+			exit={{ opacity: 0 }}
+			transition={{ duration: 0.7, ease: 'easeInOut' }}
+			className="fixed inset-0 z-[100] flex flex-col items-center justify-center"
+			style={{ background: 'var(--bg)' }}
 		  >
 			<motion.div
-			  initial={{ opacity: 0, y: 20 }}
-			  animate={{ opacity: 1, y: 0 }}
-			  transition={{ delay: 0.2, duration: 0.8 }}
+			  initial={{ opacity: 0, scale: 0.9 }}
+			  animate={{ opacity: 1, scale: 1 }}
+			  transition={{ delay: 0.15, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
 			  className="flex flex-col items-center"
 			>
-			  <img 
-				src={logoIcon} 
-				alt="OPERIX" 
-				className="w-20 h-20 mb-6 drop-shadow-[0_0_20px_rgba(212,175,55,0.4)] object-contain" 
-			  />
-			  <h1 className="text-4xl font-black font-serif tracking-widest text-vercel-base">
-				OPERIX <span className="text-brand-gold">249</span>
-			  </h1>
-			  <div className="mt-8 w-48 h-0.5 bg-vercel-border overflow-hidden rounded-full">
-				<motion.div 
-				  initial={{ x: "-100%" }}
-				  animate={{ x: "100%" }}
-				  transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-				  className="w-full h-full bg-brand-gold"
+			  {/* Glow ring */}
+			  <div
+				className="relative w-24 h-24 flex items-center justify-center mb-7"
+			  >
+				<div
+				  className="absolute inset-0 rounded-full opacity-30 blur-xl animate-pulse"
+				  style={{ background: 'radial-gradient(circle, #D4AF37 0%, transparent 70%)' }}
+				/>
+				<img
+				  src={logoIcon}
+				  alt="OPERIX"
+				  className="relative w-20 h-20 object-contain"
+				  style={{ filter: 'drop-shadow(0 0 20px rgba(212,175,55,0.5))' }}
+				/>
+			  </div>
+
+			  {/* Wordmark */}
+			  <div
+				className="flex items-center gap-1 mb-2"
+				style={{ fontFamily: 'var(--font-display)' }}
+			  >
+				<span
+				  className="text-4xl font-bold tracking-tight"
+				  style={{ color: 'var(--text)' }}
+				>
+				  OPERIX
+				</span>
+				<span
+				  className="text-4xl font-bold shimmer-text"
+				>
+				  249
+				</span>
+			  </div>
+
+			  <p
+				className="text-xs font-semibold tracking-[0.25em] uppercase mb-10"
+				style={{ color: 'var(--text-muted)' }}
+			  >
+				Enterprise Solutions
+			  </p>
+
+			  {/* Progress bar */}
+			  <div
+				className="w-48 h-[2px] overflow-hidden rounded-full"
+				style={{ background: 'var(--border)' }}
+			  >
+				<motion.div
+				  initial={{ x: '-100%' }}
+				  animate={{ x: '100%' }}
+				  transition={{
+					repeat: Infinity,
+					duration: 1.4,
+					ease: 'easeInOut',
+				  }}
+				  className="w-full h-full"
+				  style={{
+					background: 'linear-gradient(90deg, transparent, #D4AF37, #F5A623, transparent)',
+				  }}
 				/>
 			  </div>
 			</motion.div>
@@ -55,7 +102,12 @@ export default function Home() {
 
 	  <HeroSection />
 	  <TechMarquee />
-	  <LiveDashboard /> 
+	  <LiveDashboard />
+	  
+	  {/* 2. Render the sections here */}
+	  <Services />
+	  <Portfolio />
+	  
 	</div>
   );
 }

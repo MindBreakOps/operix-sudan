@@ -1,110 +1,186 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-// Added ExternalLink to your imports
 import { Users, ClipboardCheck, HeartHandshake, Code2, ArrowUpLeft, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import StartProjectModal from '../ui/StartProjectModal';
 
-// Import the background image
 import bgImage from '../../assets/ss.png';
+
+const stats = (isAr: boolean) => [
+  { icon: ClipboardCheck, val: '43+',   label: isAr ? 'إجمالي المشروعات الرقمية'  : 'Digital Projects'      },
+  { icon: Code2,          val: '5+',    label: isAr ? 'منظومات OPERIX الأساسية'   : 'Core OPERIX Systems'   },
+  { icon: Users,          val: '3',     label: isAr ? 'شركاء استراتيجيين'          : 'Strategic Partners'    },
+  { icon: HeartHandshake, val: '99.9%', label: isAr ? 'معدل استقرار تشغيلي'        : 'Operational Uptime'    },
+];
 
 export default function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { isAr } = useLanguage();
 
+  const containerVariants = {
+	hidden: {},
+	show: { transition: { staggerChildren: 0.12 } },
+  };
+
+  const itemVariants = {
+	hidden: { opacity: 0, y: 28 },
+	show:  { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+  };
+
   return (
 	<>
-	  <section id="home" className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-vercel-bg pt-20 transition-colors duration-500">
-		
-		{/* Background Image Setup (Optimized for Mobile & Desktop) */}
-		<div className="absolute inset-0 w-full h-full z-0">
-		  <img 
-			src={bgImage} 
-			alt="OPERIX Sudan Future" 
-			className="w-full h-full object-cover object-[75%_center] md:object-center opacity-90"
+	  <section
+		id="home"
+		className="relative min-h-screen flex flex-col justify-between overflow-hidden pt-20"
+		style={{ background: 'var(--bg)' }}
+	  >
+		{/* ── Background Image ── */}
+		<div className="absolute inset-0 z-0">
+		  <img
+			src={bgImage}
+			alt=""
+			aria-hidden="true"
+			className="w-full h-full object-cover object-[75%_center] md:object-center opacity-70"
 		  />
-		  {/* Gradient Overlay to ensure text readability */}
-		  <div className="absolute inset-0 bg-gradient-to-r from-vercel-bg via-vercel-bg/80 to-vercel-bg/20 transition-colors duration-500"></div>
+		  {/* Dark-mode gradient: strong left fade, subtle right */}
+		  <div
+			className="absolute inset-0"
+			style={{
+			  background:
+				'linear-gradient(105deg, var(--bg) 0%, var(--bg)/90 40%, var(--bg)/50 70%, transparent 100%)',
+			}}
+		  />
+		  {/* Grid overlay */}
+		  <div className="absolute inset-0 bg-grid opacity-60" />
 		</div>
 
-		<div className="max-w-[1400px] mx-auto w-full px-6 md:px-16 z-10 flex flex-col flex-grow justify-center py-20">
+		{/* ── Hero Content ── */}
+		<motion.div
+		  variants={containerVariants}
+		  initial="hidden"
+		  animate="show"
+		  className="max-w-[1400px] mx-auto w-full px-6 md:px-16 z-10 flex flex-col flex-grow justify-center py-24"
+		>
 		  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-			
-			<motion.div 
-			  initial={{ opacity: 0, y: 30 }}
-			  animate={{ opacity: 1, y: 0 }}
-			  transition={{ duration: 0.8, ease: "easeOut" }}
-			  className="lg:col-span-8 flex flex-col"
-			>
-			  <div className="flex items-center gap-3 mb-6">
-				<div className="w-[3px] h-6 bg-brand-amber rounded-full"></div>
-				<span className="text-brand-yellow font-bold text-sm tracking-wide uppercase drop-shadow-md">
-				  {isAr ? "من قلب السودان، نبني المستقبل" : "From the Heart of Sudan, Building the Future"}
+			<div className="lg:col-span-7 xl:col-span-6 flex flex-col">
+
+			  {/* Eyebrow */}
+			  <motion.div variants={itemVariants} className="flex items-center gap-3 mb-7">
+				<div className="w-[3px] h-6 rounded-full" style={{ background: '#D4AF37' }} />
+				<span className="tag-gold">
+				  {isAr ? 'من قلب السودان، نبني المستقبل' : 'From the Heart of Sudan, Building the Future'}
 				</span>
-			  </div>
+			  </motion.div>
 
-			  <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-vercel-text leading-[1.2] mb-6 font-serif transition-colors duration-500">
+			  {/* Headline */}
+			  <motion.h1
+				variants={itemVariants}
+				className="text-4xl md:text-5xl lg:text-[3.75rem] xl:text-[4.25rem] leading-[1.08] mb-7"
+				style={{ color: 'var(--text)', fontFamily: 'var(--font-display)' }}
+			  >
 				{isAr ? (
-				  <>وسط التحديات، نكون <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-yellow to-brand-amber">سندك التقني</span></>
+				  <>
+					وسط التحديات،{' '}
+					<br />
+					نكون{' '}
+					<span className="shimmer-text">سندك التقني</span>
+				  </>
 				) : (
-				  <>Amidst Challenges, We Are Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-yellow to-brand-amber">Technical Backbone</span></>
+				  <>
+					Amidst Challenges,
+					<br />
+					We Are Your{' '}
+					<span className="shimmer-text">Technical Backbone</span>
+				  </>
 				)}
-			  </h1>
-			  
-			  <p className="text-vercel-text/80 text-lg md:text-xl mb-10 max-w-2xl leading-relaxed font-medium transition-colors duration-500">
-				{isAr 
-				  ? "نحن نفهم تماماً ما تمر به أعمالك. في أوبيركس ٢٤٩، نحن لسنا مجرد شركة برمجيات، بل إخوة وشركاء نجاح. نصمم أنظمة تحمي بياناتك، وتسهل إدارتك، لتعود أقوى مما كنت."
-				  : "We deeply understand what your business is going through. At OPERIX 249, we aren't just a software company; we are partners in your success. We design systems that protect your data and simplify your management, so you can return stronger than ever."}
-			  </p>
+			  </motion.h1>
 
-			  {/* Added the secondary button for the main branch here */}
-			  <div className="flex flex-wrap items-center gap-4">
-				<button 
+			  {/* Sub-copy */}
+			  <motion.p
+				variants={itemVariants}
+				className="text-base md:text-lg mb-10 max-w-xl leading-relaxed"
+				style={{ color: 'var(--text-muted)', fontWeight: 500 }}
+			  >
+				{isAr
+				  ? 'نحن نفهم تماماً ما تمر به أعمالك. في أوبيركس ٢٤٩، نحن لسنا مجرد شركة برمجيات — بل إخوة وشركاء نجاح. نصمم أنظمة تحمي بياناتك، وتسهل إدارتك، لتعود أقوى مما كنت.'
+				  : "We deeply understand what your business is going through. At OPERIX 249, we aren't just a software company — we are partners in your success. We design systems that protect your data and simplify your management, so you can return stronger than ever."}
+			  </motion.p>
+
+			  {/* CTAs */}
+			  <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3">
+				<button
 				  onClick={() => setIsModalOpen(true)}
-				  className="flex items-center justify-center gap-2 bg-gradient-to-r from-brand-yellow to-brand-amber text-black font-bold px-8 py-4 rounded-xl hover:scale-105 transition-all duration-300 group shadow-[0_0_30px_rgba(234,179,8,0.2)]"
+				  className="btn-primary flex items-center gap-2.5 group"
 				>
-				  <span>{isAr ? "ابدأ رحلة التعافي معنا" : "Start Your Recovery Journey"}</span>
-				  <ArrowUpLeft className="w-5 h-5 group-hover:-translate-x-1 group-hover:-translate-y-1 transition-transform" />
+				  <span>{isAr ? 'ابدأ رحلة التعافي معنا' : 'Start Your Recovery Journey'}</span>
+				  <ArrowUpLeft
+					size={18}
+					className="transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1"
+				  />
 				</button>
-				
-				<a 
+
+				<a
 				  href="https://www.operix-solutions.com"
 				  target="_blank"
 				  rel="noopener noreferrer"
-				  className="flex items-center justify-center gap-2 bg-vercel-surface border border-vercel-border text-vercel-text font-bold px-8 py-4 rounded-xl hover:border-brand-gold hover:bg-vercel-bg transition-all duration-300 group"
+				  className="btn-secondary flex items-center gap-2.5 group"
 				>
-				  <span>{isAr ? "الموقع الرئيسي OPERIX" : "Main OPERIX Branch"}</span>
-				  <ExternalLink className="w-4 h-4 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
+				  <span>{isAr ? 'الموقع الرئيسي OPERIX' : 'Main OPERIX Branch'}</span>
+				  <ExternalLink
+					size={16}
+					className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+				  />
 				</a>
-			  </div>
-			</motion.div>
+			  </motion.div>
+			</div>
 		  </div>
-		</div>
+		</motion.div>
 
-		{/* Stats Bar */}
-		<motion.div 
-		  initial={{ opacity: 0, y: 20 }}
+		{/* ── Stats Bar ── */}
+		<motion.div
+		  initial={{ opacity: 0, y: 24 }}
 		  animate={{ opacity: 1, y: 0 }}
-		  transition={{ duration: 0.8, delay: 0.3 }}
-		  className="w-full bg-vercel-bg pt-10 pb-6 z-10 border-t border-vercel-border transition-colors duration-500"
+		  transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+		  className="w-full z-10 px-6 md:px-16 pb-8"
+		  style={{ borderTop: '1px solid var(--border)' }}
 		>
-		  <div className="max-w-[1400px] mx-auto px-6 md:px-16">
-			<div className="bg-vercel-surface border border-vercel-border rounded-xl p-6 grid grid-cols-2 md:grid-cols-4 gap-6 items-center shadow-2xl transition-colors duration-500">
-			  {[
-				{ icon: ClipboardCheck, val: "43+", title: isAr ? "إجمالي المشروعات الرقمية" : "Total Digital Projects" },
-				{ icon: Code2, val: "5+", title: isAr ? "منظومات OPERIX الأساسية" : "Core OPERIX Systems" },
-				{ icon: Users, val: "3", title: isAr ? "شركاء استراتيجيين" : "Strategic Partners" },
-				{ icon: HeartHandshake, val: "99.9%", title: isAr ? "معدل استقرار الأداء التشغيلي" : "Operational Uptime" }
-			  ].map((stat, i) => (
-				<div key={i} className="flex items-center gap-3">
-				  <div className="p-3 bg-vercel-bg border border-vercel-border rounded-lg shadow-sm flex items-center justify-center transition-colors duration-500">
-					<stat.icon className="w-5 h-5 text-brand-yellow" />
+		  <div className="max-w-[1400px] mx-auto pt-6">
+			<div
+			  className="rounded-2xl px-6 py-5 grid grid-cols-2 md:grid-cols-4 gap-5 card-glow border-gradient-gold"
+			  style={{ background: 'var(--surface)' }}
+			>
+			  {stats(isAr).map((stat, i) => (
+				<motion.div
+				  key={i}
+				  initial={{ opacity: 0, y: 12 }}
+				  animate={{ opacity: 1, y: 0 }}
+				  transition={{ delay: 0.6 + i * 0.08 }}
+				  className="flex items-center gap-4"
+				>
+				  <div
+					className="p-2.5 rounded-xl shrink-0"
+					style={{
+					  background: 'var(--surface-2)',
+					  border: '1px solid var(--border)',
+					}}
+				  >
+					<stat.icon size={20} style={{ color: '#D4AF37' }} />
 				  </div>
 				  <div>
-					<h4 className="text-xl font-bold text-vercel-text tracking-tight transition-colors duration-500">{stat.val}</h4>
-					<p className="text-xs text-vercel-text/60 font-medium transition-colors duration-500">{stat.title}</p>
+					<p
+					  className="text-xl font-black tracking-tight leading-none mb-0.5"
+					  style={{ color: 'var(--text)', fontFamily: 'var(--font-display)' }}
+					>
+					  {stat.val}
+					</p>
+					<p
+					  className="text-xs font-medium leading-tight"
+					  style={{ color: 'var(--text-muted)' }}
+					>
+					  {stat.label}
+					</p>
 				  </div>
-				</div>
+				</motion.div>
 			  ))}
 			</div>
 		  </div>

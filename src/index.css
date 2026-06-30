@@ -1,44 +1,363 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&family=Syne:wght@700;800&family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&display=swap');
 
+/* ─── Design Tokens ─── */
 @theme {
-  --color-vercel-bg: var(--bg);       
-  --color-vercel-surface: var(--surface);  
-  --color-vercel-border: var(--border);   
-  --color-brand-gold: #d4af37;    /* Premium Metallic Gold */
-  --color-vercel-text: var(--text);     
+  /* Mapped from CSS custom properties */
+  --color-vercel-bg:           var(--bg);
+  --color-vercel-surface:      var(--surface);
+  --color-vercel-surface-2:    var(--surface-2);
+  --color-vercel-border:       var(--border);
+  --color-vercel-border-bright: var(--border-bright);
 
-  --font-sans: 'Inter', 'Cairo', sans-serif;
+  /* Semantic text tokens */
+  --color-vercel-text:         var(--text);
+  --color-vercel-surface-text: var(--text);
+  --color-vercel-muted:        var(--text-muted);
+  --color-vercel-subtle:       var(--text-subtle);
+  --color-vercel-base:         var(--text);
+
+  /* Brand palette */
+  --color-brand-gold:    #D4AF37;
+  --color-brand-amber:   #F5A623;
+  --color-brand-yellow:  #FFD700;
+  --color-brand-accent:  #6B73FF;
+  --color-brand-emerald: #10B981;
+  --color-brand-crimson: #EF4444;
+
+  /* Typography */
+  --font-sans:    'Inter', 'Cairo', sans-serif;
+  --font-display: 'Syne', 'Cairo', sans-serif;
+  --font-arabic:  'Cairo', sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
 }
 
+/* ─── Dark Mode (Default) ─── */
 @layer base {
   :root, .dark {
-	--bg: #000000;
-	--surface: #0a0a0a;
-	--border: #333333;
-	--text: #ffffff;
+    --bg:           #07070F;
+    --surface:      #0E0E1C;
+    --surface-2:    #15152A;
+    --border:       #2A2A4A;
+    --border-bright:#4A4A7A;
+    --text:         #F0F0FF;
+    --text-muted:   #8888BB;
+    --text-subtle:  #5555A0;
+
+    color-scheme: dark;
   }
+
+  /* ─── Light Mode ─── */
   .light {
-	--bg: #ffffff;
-	--surface: #0B1120; /* Navy Blue Frames */
-	--border: #1E293B;
-	--text: #000000;
+    --bg:           #F4F4FB;
+    --surface:      #FFFFFF;
+    --surface-2:    #EEF0FF;
+    --border:       #E0E0F0;
+    --border-bright:#C2C2E8;
+    --text:         #0A0A1F;
+    --text-muted:   #5A5A8A;
+    --text-subtle:  #9090C0;
+
+    color-scheme: light;
   }
-  body { @apply bg-vercel-bg text-vercel-text transition-colors duration-500; }
-  h1, h2, h3 { @apply font-black tracking-tighter; }
+
+  /* ─── Base Styles ─── */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-vercel-bg text-vercel-text;
+    font-family: var(--font-sans);
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
+
+  /* Display headings use Syne (bold geometric) */
+  h1, h2 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  /* Arabic RTL — Cairo for all text */
+  [dir="rtl"], [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3 {
+    font-family: var(--font-arabic);
+    letter-spacing: 0;
+  }
+
+  /* Selection highlight */
+  ::selection {
+    background-color: rgba(212, 175, 55, 0.25);
+    color: inherit;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-bright);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
 }
-/* Custom Login Animations */
-:root {
-  --login-anim-dur: 10s;
-  --login-anim-delay: 0s;
+
+/* ─── Brand Gradient ─── */
+@layer utilities {
+  .text-brand-gradient {
+    background: linear-gradient(135deg, #D4AF37 0%, #F5A623 50%, #FFD700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-accent-gradient {
+    background: linear-gradient(135deg, #6B73FF 0%, #8B9AFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Gold glow shadow */
+  .shadow-gold {
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.15),
+                0 0 60px rgba(212, 175, 55, 0.05);
+  }
+
+  .shadow-gold-sm {
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.2);
+  }
+
+  .shadow-accent {
+    box-shadow: 0 0 30px rgba(107, 115, 255, 0.15);
+  }
+
+  /* Subtle surface glow for cards */
+  .card-glow {
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
+                0 4px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Noise texture overlay for premium feel */
+  .texture-noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* Grid pattern bg */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(107, 115, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(107, 115, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Gold shimmer animation for hero text */
+  .shimmer-text {
+    background: linear-gradient(
+      90deg,
+      #D4AF37 0%,
+      #FFD700 30%,
+      #F5A623 50%,
+      #FFD700 70%,
+      #D4AF37 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: 200% center; }
+    100% { background-position: -200% center; }
+  }
+
+  /* Pulse ring animation */
+  .pulse-ring {
+    animation: pulse-ring 2s ease-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+    70%  { transform: scale(1);    box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+  }
+
+  /* Scan line animation for tech cards */
+  .scan-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+    animation: scan 3s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes scan {
+    0%   { top: 0%; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  /* Fade up */
+  .fade-up {
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Gradient border */
+  .border-gradient-gold {
+    border: 1px solid transparent;
+    background-image: linear-gradient(var(--surface), var(--surface)),
+                      linear-gradient(135deg, rgba(212,175,55,0.5), rgba(107,115,255,0.3));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  /* Glowing button */
+  .btn-primary {
+    background: linear-gradient(135deg, #D4AF37, #F5A623);
+    color: #0A0A1F;
+    font-weight: 700;
+    border-radius: 12px;
+    padding: 14px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .btn-primary:hover::after { opacity: 1; }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    font-weight: 600;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 27px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-secondary:hover {
+    border-color: #D4AF37;
+    color: #D4AF37;
+    background: rgba(212, 175, 55, 0.06);
+    transform: translateY(-1px);
+  }
+
+  /* Tag / label pill */
+  .tag-gold {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    color: #D4AF37;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+
+  .tag-accent {
+    background: rgba(107, 115, 255, 0.1);
+    border: 1px solid rgba(107, 115, 255, 0.3);
+    color: #8B9AFF;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
 }
-/* Fix Leaflet Popups for Dark Theme */
-.leaflet-popup-content-wrapper, .leaflet-popup-tip {
-  background-color: #0a0a0a !important; /* vercel-surface */
-  border: 1px solid #333333 !important; /* vercel-border */
-  color: #ffffff !important;
+
+/* ─── Component Overrides ─── */
+@layer components {
+  /* Light mode card */
+  .light .card-glow {
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.8) inset,
+                0 4px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Light mode grid */
+  .light .bg-grid {
+    background-image:
+      linear-gradient(rgba(107, 115, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(107, 115, 255, 0.06) 1px, transparent 1px);
+  }
+
+  /* Leaflet popups — always dark */
+  .leaflet-popup-content-wrapper,
+  .leaflet-popup-tip {
+    background-color: #0E0E1C !important;
+    border: 1px solid #2A2A4A !important;
+    color: #F0F0FF !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
+  }
+
+  .leaflet-container a.leaflet-popup-close-button {
+    color: #D4AF37 !important;
+  }
+
+  .leaflet-control-attribution {
+    display: none !important;
+  }
 }
-.leaflet-container a.leaflet-popup-close-button {
-  color: #d4af37 !important; /* brand-gold */
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

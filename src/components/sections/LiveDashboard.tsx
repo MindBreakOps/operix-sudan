@@ -1,47 +1,68 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import StartProjectModal from '../ui/StartProjectModal';
 import { supabaseClient as supabase } from '../../config/supabase';
-// 1. Import Leaflet Components and CSS
 import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-
-// 2. Dummy locations to act as "Live Signals" (Focused around Sudan & Middle East)
-const activeSignals = [
-  { id: 1, lat: 15.5007, lng: 32.5599, city: "Khartoum, SD", users: 342 },
-  { id: 2, lat: 24.7136, lng: 46.6753, city: "Riyadh, SA", users: 512 },
-  { id: 3, lat: 25.2048, lng: 55.2708, city: "Dubai, AE", users: 128 },
-  { id: 4, lat: 30.0444, lng: 31.2357, city: "Cairo, EG", users: 245 },
-];
 
 export default function LiveDashboard() {
   const { isAr } = useLanguage();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
   const [visitors, setVisitors] = useState(0);
+  const [activeSignals, setActiveSignals] = useState<any[]>([]);
 
   useEffect(() => {
-	const logVisitAndFetchCount = async () => {
+	const logVisitAndFetchData = async () => {
 	  try {
-		await supabase.from('operix_sudan_visitor_logs').insert([{}]);
-		const { count, error } = await supabase
+		// 1. Get the user's real geographic location using a CORS-friendly API
+		const geoResponse = await fetch('https://ipwho.is/');
+		const geoData = await geoResponse.json();
+	
+		// 2. Insert the real data into Supabase
+		if (geoData.success && geoData.ip) {
+		  await supabase.from('operix_sudan_visitor_logs').insert([{
+			ip_address: geoData.ip,
+			ip_country: geoData.country, // Updated to match ipwho.is response
+			city: geoData.city,
+			lat: geoData.latitude,
+			lng: geoData.longitude
+		  }]);
+		}
+	
+		// 3. Fetch the total count for the indicator
+		const { count } = await supabase
 		  .from('operix_sudan_visitor_logs')
 		  .select('*', { count: 'exact', head: true });
-
-		if (!error && count !== null) {
-		  setVisitors(count);
-		}
+	
+		if (count !== null) setVisitors(count);
+	
+		// 4. Fetch the latest distinct locations for the map
+		const { data: locations } = await supabase
+		  .from('operix_sudan_visitor_logs')
+		  .select('city, lat, lng, ip_country')
+		  .not('lat', 'is', null)
+		  .order('visited_at', { ascending: false })
+		  .limit(50); 
+	
+		if (locations) setActiveSignals(locations);
+	
 	  } catch (err) {
-		console.error("Failed to connect to visitor logs:", err);
+		console.error("Failed to sync live data:", err);
 	  }
 	};
 
-	logVisitAndFetchCount();
+	logVisitAndFetchData();
 
+	// 5. Listen for new visitors hitting the site live
 	const subscription = supabase
 	  .channel('public:operix_sudan_visitor_logs')
-	  .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'operix_sudan_visitor_logs' }, () => {
+	  .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'operix_sudan_visitor_logs' }, (payload) => {
 		setVisitors((current) => current + 1);
+		// Add the new ping to the map dynamically
+		if (payload.new.lat && payload.new.lng) {
+		  setActiveSignals((prev) => [payload.new, ...prev].slice(0, 50));
+		}
 	  })
 	  .subscribe();
 
@@ -71,29 +92,25 @@ export default function LiveDashboard() {
 			  </div>
 			</div>
 			
-			{/* Real Interactive Leaflet Map */}
-			{/* Note: The z-index is set to z-0 so it doesn't overlap your fixed Header */}
 			<div className="w-full flex-grow min-h-[350px] rounded-lg border border-vercel-border overflow-hidden relative z-0">
 			  <MapContainer 
-				center={[20.0, 40.0]} // Centered between Sudan and Saudi Arabia
+				center={[20.0, 40.0]} 
 				zoom={4} 
-				scrollWheelZoom={false} // Prevents page scrolling issues
+				scrollWheelZoom={false}
+				attributionControl={false} /* <-- This completely hides the label */
 				style={{ height: '100%', width: '100%', backgroundColor: '#000000' }}
 			  >
-				{/* Dark Mode Tiles */}
 				<TileLayer
 				  url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-				  attribution='&copy; <a href="https://carto.com/">CartoDB</a>'
 				/>
 				
-				{/* Rendering the Signals */}
-				{activeSignals.map((signal) => (
+				{activeSignals.map((signal, idx) => (
 				  <CircleMarker 
-					key={signal.id}
+					key={idx}
 					center={[signal.lat, signal.lng]}
-					radius={8}
+					radius={6}
 					pathOptions={{ 
-					  color: '#d4af37', // brand-gold
+					  color: '#d4af37', 
 					  fillColor: '#d4af37', 
 					  fillOpacity: 0.6,
 					  weight: 2
@@ -101,8 +118,8 @@ export default function LiveDashboard() {
 				  >
 					<Popup className="bg-vercel-surface text-vercel-text border-vercel-border">
 					  <div className="text-center font-sans">
-						<strong className="block text-brand-gold text-sm mb-1">{signal.city}</strong>
-						<span className="text-xs text-gray-500">Active Sessions: {signal.users}</span>
+						<strong className="block text-brand-gold text-sm mb-1">{signal.city || 'Unknown Region'}</strong>
+						<span className="text-xs text-gray-500">{signal.ip_country}</span>
 					  </div>
 					</Popup>
 				  </CircleMarker>

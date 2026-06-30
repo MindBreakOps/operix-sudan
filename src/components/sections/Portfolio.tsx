@@ -1,98 +1,252 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
-import { ExternalLink, Eye } from 'lucide-react';
+import { ExternalLink, Eye, ArrowUpRight } from 'lucide-react';
+
+const projects = (isAr: boolean) => [
+  {
+	title:      isAr ? 'نظام إسناد للموارد والعمليات' : 'Esnad ERP & Operations',
+	category:   isAr ? 'إدارة المؤسسات'                : 'Enterprise Management',
+	desc:       isAr
+	  ? 'منظومة متكاملة لإدارة الموارد البشرية والعمليات اللوجستية والمالية في بيئة واحدة.'
+	  : 'A unified suite for HR, logistics, and financial operations in a single environment.',
+	accent:     '#D4AF37',
+	accentRgb:  '212,175,55',
+	launchUrl:  'https://www.ops.operix-solutions.online',
+	badge:      isAr ? 'مباشر' : 'Live',
+  },
+  {
+	title:      isAr ? 'نظام شفاء للرعاية الصحية' : 'Shifa Healthcare System',
+	category:   isAr ? 'تكنولوجيا طبية'             : 'Medical Tech',
+	desc:       isAr
+	  ? 'نظام إدارة مستشفيات وعيادات يحفظ السجلات الطبية ويسهل مسارات الرعاية في أصعب الظروف.'
+	  : 'Hospital and clinic management that secures medical records and streamlines care under any conditions.',
+	accent:     '#EF4444',
+	accentRgb:  '239,68,68',
+	launchUrl:  'https://www.care.operix-solutions.online',
+	badge:      isAr ? 'مباشر' : 'Live',
+  },
+  {
+	title:      isAr ? 'مجتمع حصاد الرقمي' : 'Hased Community Hub',
+	category:   isAr ? 'منصات مجتمعية'     : 'Community Platforms',
+	desc:       isAr
+	  ? 'منصة رقمية لإدارة الأحياء السكنية، التواصل المجتمعي، وخدمات الإدارة المدنية المتكاملة.'
+	  : 'A digital platform for residential management, community engagement, and integrated civic services.',
+	accent:     '#10B981',
+	accentRgb:  '16,185,129',
+	launchUrl:  'https://www.hasad.operix-solutions.online',
+	badge:      isAr ? 'مباشر' : 'Live',
+  },
+];
 
 export default function Portfolio() {
   const { isAr } = useLanguage();
-
-  const projects = [
-	{
-	  title: isAr ? "نظام إسناد للموارد والعمليات" : "Esnad ERP & Operations",
-	  category: isAr ? "إدارة المؤسسات" : "Enterprise Management",
-	  gradient: "from-brand-yellow/10 via-transparent to-transparent",
-	  launchUrl: "https://www.ops.operix-solutions.online"
-	},
-	{
-	  title: isAr ? "نظام شفاء للرعاية الصحية" : "Shifa Healthcare System",
-	  category: isAr ? "تكنولوجيا طبية" : "Medical Tech",
-	  gradient: "from-blue-500/10 via-transparent to-transparent",
-	  launchUrl: "https://www.care.operix-solutions.online"
-	},
-	{
-	  title: isAr ? "مجتمع حصاد الرقمي" : "Hased Community Hub",
-	  category: isAr ? "منصات مجتمعية" : "Community Platforms",
-	  gradient: "from-emerald-500/10 via-transparent to-transparent",
-	  launchUrl: "https://www.edu.operix-solutions.online"
-	},
-  ];
+  const [hovered, setHovered] = useState<number | null>(null);
+  const items = projects(isAr);
 
   return (
-	<section id="portfolio" className="relative overflow-hidden bg-vercel-bg px-6 py-32">
-	  <div className="mx-auto max-w-7xl">
+	<section
+	  id="portfolio"
+	  className="relative overflow-hidden px-6 py-28"
+	  style={{ background: 'var(--bg)' }}
+	>
+	  {/* Subtle background accent blob */}
+	  <div
+		className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full opacity-[0.03] blur-3xl"
+		style={{ background: 'radial-gradient(ellipse, #D4AF37 0%, transparent 70%)' }}
+	  />
+
+	  <div className="mx-auto max-w-7xl relative z-10">
+
+		{/* ── Section Header ── */}
 		<motion.div
-		  initial={{ opacity: 0, y: 40 }}
+		  initial={{ opacity: 0, y: 32 }}
 		  whileInView={{ opacity: 1, y: 0 }}
-		  transition={{ duration: 0.8 }}
+		  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
 		  viewport={{ once: true }}
-		  className="mb-20 text-center"
+		  className="mb-16"
 		>
-		  <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-brand-yellow">
-			{isAr ? "منظوماتنا التشغيلية" : "OUR OPERATIONAL SYSTEMS"}
-		  </p>
-		  <h2 className="text-4xl font-black text-white md:text-5xl font-serif">
-			{isAr ? "مشاريع صُممت لتصمد وتنمو" : "Projects Built to Endure and Grow"}
+		  <div className="flex items-center gap-3 mb-4">
+			<div className="h-px w-10 bg-brand-gold" />
+			<span className="tag-gold">
+			  {isAr ? 'منظوماتنا التشغيلية' : 'Our Operational Systems'}
+			</span>
+		  </div>
+		  <h2
+			className="text-4xl md:text-5xl lg:text-6xl max-w-2xl"
+			style={{ color: 'var(--text)', fontFamily: 'var(--font-display)' }}
+		  >
+			{isAr ? 'مشاريع صُممت لتصمد وتنمو' : 'Projects Built to Endure and Grow'}
 		  </h2>
 		</motion.div>
 
-		<div className="grid gap-10 lg:grid-cols-3">
-		  {projects.map((project, index) => (
-			<motion.div
-			  key={project.title}
-			  initial={{ opacity: 0, y: 50 }}
-			  whileInView={{ opacity: 1, y: 0 }}
-			  transition={{ delay: index * 0.15 }}
-			  viewport={{ once: true }}
-			  className="group relative overflow-hidden rounded-[32px] border border-vercel-border bg-vercel-surface transition-all duration-300 hover:border-vercel-muted"
-			>
-			  <div className="relative h-[420px] flex flex-col justify-between overflow-hidden p-8">
-				<div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-60 transition duration-500 group-hover:scale-110 pointer-events-none`} />
-				<div className="absolute inset-0 bg-vercel-bg/30 pointer-events-none" />
+		{/* ── Cards Grid ── */}
+		<div className="grid gap-6 lg:grid-cols-3">
+		  {items.map((project, i) => {
+			const isHov = hovered === i;
 
-				<div className="relative z-10">
-				  <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-brand-yellow">
-					{project.category}
-				  </p>
-				  <h3 className="text-2xl font-bold text-white leading-tight">
+			return (
+			  <motion.div
+				key={project.title}
+				initial={{ opacity: 0, y: 40 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				transition={{ delay: i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+				viewport={{ once: true }}
+				onMouseEnter={() => setHovered(i)}
+				onMouseLeave={() => setHovered(null)}
+				className="group relative overflow-hidden rounded-3xl border transition-all duration-400"
+				style={{
+				  background:   'var(--surface)',
+				  borderColor:  isHov ? `${project.accent}45` : 'var(--border)',
+				  transform:    isHov ? 'translateY(-4px)' : 'translateY(0)',
+				  boxShadow:    isHov
+					? `0 20px 60px rgba(${project.accentRgb},0.12), 0 0 0 1px ${project.accent}20`
+					: '0 4px 20px rgba(0,0,0,0.08)',
+				  transition:   'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+				}}
+			  >
+				{/* Gradient wash — accent color, adapts to light/dark */}
+				<div
+				  className="absolute inset-0 pointer-events-none transition-opacity duration-500"
+				  style={{
+					background:  `radial-gradient(ellipse 80% 50% at 50% 0%, rgba(${project.accentRgb},0.08) 0%, transparent 70%)`,
+					opacity:     isHov ? 1 : 0.4,
+				  }}
+				/>
+
+				{/* Scan line on hover */}
+				{isHov && (
+				  <div
+					className="absolute inset-x-0 h-px pointer-events-none"
+					style={{
+					  background: `linear-gradient(90deg, transparent, ${project.accent}60, transparent)`,
+					  animation:  'scan 2.5s linear infinite',
+					  top: '0%',
+					}}
+				  />
+				)}
+
+				<div className="relative z-10 flex flex-col h-full p-8">
+
+				  {/* Category + badge */}
+				  <div className="flex items-center justify-between mb-5">
+					<span
+					  className="text-[10px] font-black uppercase tracking-[0.2em]"
+					  style={{ color: project.accent }}
+					>
+					  {project.category}
+					</span>
+					<span
+					  className="flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full"
+					  style={{
+						background: `rgba(${project.accentRgb},0.1)`,
+						border:     `1px solid rgba(${project.accentRgb},0.25)`,
+						color:      project.accent,
+					  }}
+					>
+					  <span
+						className="w-1.5 h-1.5 rounded-full animate-pulse"
+						style={{ background: project.accent }}
+					  />
+					  {project.badge}
+					</span>
+				  </div>
+
+				  {/* Title */}
+				  <h3
+					className="text-xl font-bold mb-3 leading-snug transition-colors duration-200"
+					style={{ color: isHov ? project.accent : 'var(--text)' }}
+				  >
 					{project.title}
 				  </h3>
-				</div>
 
-				{/* Interactive Action Buttons */}
-				<div className="relative z-10 flex items-center gap-3 mt-auto pt-6 border-t border-vercel-border/50">
-				  <a 
-					href={project.launchUrl} 
-					target="_blank" 
-					rel="noreferrer"
-					className="flex-1 flex items-center justify-center gap-2 bg-white text-black py-3 px-4 rounded-xl font-bold text-sm hover:bg-gray-200 transition-colors"
+				  {/* Description */}
+				  <p
+					className="text-sm leading-relaxed mb-8 flex-grow"
+					style={{ color: 'var(--text-muted)' }}
 				  >
-					<ExternalLink size={16} />
-					{isAr ? "تشغيل مباشر" : "Direct Launch"}
-				  </a>
-				  <a 
-					href="https://www.operix-solutions.com/products" 
-					target="_blank" 
-					rel="noreferrer"
-					className="flex-1 flex items-center justify-center gap-2 bg-vercel-bg border border-vercel-border text-white py-3 px-4 rounded-xl font-bold text-sm hover:border-brand-yellow hover:text-brand-yellow transition-all"
+					{project.desc}
+				  </p>
+
+				  {/* Action buttons */}
+				  <div
+					className="flex items-center gap-3 pt-5 border-t"
+					style={{ borderColor: 'var(--border)' }}
 				  >
-					<Eye size={16} />
-					{isAr ? "معاينة التفاصيل" : "Preview"}
-				  </a>
+					<a
+					  href={project.launchUrl}
+					  target="_blank"
+					  rel="noreferrer"
+					  className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm transition-all duration-200"
+					  style={{
+						background: project.accent,
+						color:      '#0A0A1F',
+					  }}
+					  onMouseEnter={(e) => {
+						(e.currentTarget as HTMLElement).style.filter = 'brightness(1.1)';
+						(e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
+					  }}
+					  onMouseLeave={(e) => {
+						(e.currentTarget as HTMLElement).style.filter = '';
+						(e.currentTarget as HTMLElement).style.transform = '';
+					  }}
+					>
+					  <ExternalLink size={15} />
+					  {isAr ? 'تشغيل مباشر' : 'Direct Launch'}
+					</a>
+
+					<a
+					  href="https://www.operix-solutions.com/products"
+					  target="_blank"
+					  rel="noreferrer"
+					  className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm border transition-all duration-200"
+					  style={{
+						background:  'var(--surface-2)',
+						borderColor: 'var(--border)',
+						color:       'var(--text-muted)',
+					  }}
+					  onMouseEnter={(e) => {
+						const el = e.currentTarget as HTMLElement;
+						el.style.borderColor = `${project.accent}50`;
+						el.style.color = project.accent;
+					  }}
+					  onMouseLeave={(e) => {
+						const el = e.currentTarget as HTMLElement;
+						el.style.borderColor = 'var(--border)';
+						el.style.color = 'var(--text-muted)';
+					  }}
+					>
+					  <Eye size={15} />
+					  {isAr ? 'معاينة التفاصيل' : 'Preview'}
+					</a>
+				  </div>
 				</div>
-			  </div>
-			</motion.div>
-		  ))}
+			  </motion.div>
+			);
+		  })}
 		</div>
+
+		{/* ── Bottom link ── */}
+		<motion.div
+		  initial={{ opacity: 0 }}
+		  whileInView={{ opacity: 1 }}
+		  transition={{ delay: 0.5 }}
+		  viewport={{ once: true }}
+		  className="mt-12 text-center"
+		>
+		  <a
+			href="https://www.operix-solutions.com/products"
+			target="_blank"
+			rel="noreferrer"
+			className="inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200"
+			style={{ color: 'var(--text-muted)' }}
+			onMouseEnter={(e) => (e.currentTarget.style.color = '#D4AF37')}
+			onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+		  >
+			{isAr ? 'استعرض جميع المنتجات على الموقع الرئيسي' : 'See all products on the main site'}
+			<ArrowUpRight size={15} />
+		  </a>
+		</motion.div>
 	  </div>
 	</section>
   );

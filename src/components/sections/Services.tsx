@@ -1,100 +1,194 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Activity, Users, LayoutGrid, Heart, Server } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
+const services = (isAr: boolean) => [
+  {
+	title:      isAr ? 'نظام شفاء (Shifa)'               : 'Shifa Healthcare',
+	icon:       Activity,
+	accent:     '#EF4444',
+	accentRgb:  '239,68,68',
+	description: isAr
+	  ? 'لأن صحة أهلنا تهمنا. نظام متكامل لإدارة المستشفيات والعيادات، يحفظ تاريخ المرضى ويسهل عمل الأطباء في أصعب الظروف.'
+	  : "Because our people's health matters. A complete hospital management system that secures patient history and eases medical workflows under the harshest conditions.",
+  },
+  {
+	title:      isAr ? 'إسناد (Esnad)'                   : 'Esnad Management',
+	icon:       LayoutGrid,
+	accent:     '#D4AF37',
+	accentRgb:  '212,175,55',
+	description: isAr
+	  ? 'سند حقيقي لإدارة الموارد البشرية والعمليات (HRIS & FMIS). ننظم لك الهيكلة لتتفرغ أنت لنمو أعمالك.'
+	  : 'True support for your HR and facility management (HRIS & FMIS). We organize your structure so you can focus on growth.',
+  },
+  {
+	title:      isAr ? 'مجتمع حصاد (Hased)'              : 'Hased Community',
+	icon:       Users,
+	accent:     '#10B981',
+	accentRgb:  '16,185,129',
+	description: isAr
+	  ? 'منصات مجتمعية مترابطة تجمع الناس، تسهل التواصل، وتبني بيئة رقمية آمنة للتعاون والعمل المشترك.'
+	  : 'Interconnected community platforms that bring people together and build a safe digital environment for collaboration.',
+  },
+  {
+	title:      isAr ? 'أمن سيبراني صارم'                : 'Strict Cyber Security',
+	icon:       ShieldCheck,
+	accent:     '#6B73FF',
+	accentRgb:  '107,115,255',
+	description: isAr
+	  ? 'حماية بياناتك هي أمانتنا. نوفر بنية تحتية مقاومة للاختراقات لضمان استمرارية أعمالك دون قلق.'
+	  : 'Protecting your data is our duty. We provide hack-resistant infrastructure ensuring business continuity without worry.',
+  },
+  {
+	title:      isAr ? 'تطبيقات بتجربة مستخدم مريحة'    : 'Comforting UX Apps',
+	icon:       Heart,
+	accent:     '#F5A623',
+	accentRgb:  '245,166,35',
+	description: isAr
+	  ? 'نصمم واجهات تُريح العين وتُشعر المستخدم بالثقة، مع تفاعلات سلسة تدعم العربية والإنجليزية.'
+	  : 'We design interfaces that comfort the eye and inspire user confidence, with smooth interactions supporting both Arabic and English.',
+  },
+  {
+	title:      isAr ? 'استضافة سحابية موثوقة'           : 'Reliable Cloud Hosting',
+	icon:       Server,
+	accent:     '#8B5CF6',
+	accentRgb:  '139,92,246',
+	description: isAr
+	  ? 'خوادم سحابية تضمن بقاء أنظمتك تعمل على مدار الساعة، لأن توقف العمل ليس خياراً في بيئتنا.'
+	  : "Cloud servers that guarantee your systems stay online 24/7, because downtime is not an option in our environment.",
+  },
+];
+
 export default function Services() {
   const { isAr } = useLanguage();
-
-  const services = [
-	{
-	  title: isAr ? "نظام شفاء (Shifa)" : "Shifa Healthcare",
-	  icon: Activity,
-	  description: isAr 
-		? "لأن صحة أهلنا تهمنا. نظام متكامل لإدارة المستشفيات والعيادات، يحفظ تاريخ المرضى ويسهل عمل الأطباء في أصعب الظروف."
-		: "Because our people's health matters. A complete hospital management system that secures patient history and eases medical workflows."
-	},
-	{
-	  title: isAr ? "إسناد (Esnad)" : "Esnad Management",
-	  icon: LayoutGrid,
-	  description: isAr
-		? "سند حقيقي لإدارة الموارد البشرية والعمليات (HRIS & FMIS). ننظم لك الهيكلة لتتفرغ أنت لنمو أعمالك."
-		: "True support for your HR and Facility management. We organize your structure so you can focus on growth."
-	},
-	{
-	  title: isAr ? "مجتمع حصاد (Hased)" : "Hased Community",
-	  icon: Users,
-	  description: isAr
-		? "منصات مجتمعية مترابطة تجمع الناس، تسهل التواصل، وتبني بيئة رقمية آمنة للتعاون والعمل المشترك."
-		: "Interconnected platforms that bring people together, facilitating communication in a safe digital environment."
-	},
-	{
-	  title: isAr ? "أمن سيبراني صارم" : "Strict Cyber Security",
-	  icon: ShieldCheck,
-	  description: isAr
-		? "حماية بياناتك هي أمانتنا. نوفر بنية تحتية مقاومة للاختراقات لضمان استمرارية أعمالك دون قلق."
-		: "Protecting your data is our duty. We provide hack-resistant infrastructure ensuring business continuity."
-	},
-	{
-	  title: isAr ? "تطبيقات بتجربة مستخدم مريحة" : "Comforting UX Apps",
-	  icon: Heart,
-	  description: isAr
-		? "نصمم واجهات باللون الأسود الملكي المريح للعين، مع تفاعلات سلسة تُشعر المستخدم بالثقة والاحترافية."
-		: "We design interfaces in eye-comforting royal black, with smooth interactions that build user trust."
-	},
-	{
-	  title: isAr ? "استضافة سحابية موثوقة" : "Reliable Cloud Hosting",
-	  icon: Server,
-	  description: isAr
-		? "خوادم سحابية تضمن بقاء أنظمتك تعمل على مدار الساعة، لأن توقف العمل ليس خياراً."
-		: "Cloud servers that guarantee your systems stay online 24/7, because downtime is not an option."
-	}
-  ];
+  const [hovered, setHovered] = useState<number | null>(null);
+  const items = services(isAr);
 
   return (
-	<section id="services" className="relative bg-royal-dark px-6 py-32 border-t border-royal-border">
-	  <div className="mx-auto max-w-7xl">
+	<section
+	  id="services"
+	  className="relative px-6 py-28 border-t"
+	  style={{
+		background:  'var(--bg)',
+		borderColor: 'var(--border)',
+	  }}
+	>
+	  {/* Background glow */}
+	  <div
+		className="pointer-events-none absolute inset-0 overflow-hidden"
+		aria-hidden="true"
+	  >
+		<div
+		  className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-3xl opacity-[0.04]"
+		  style={{ background: 'radial-gradient(ellipse, #D4AF37 0%, transparent 70%)' }}
+		/>
+	  </div>
+
+	  <div className="mx-auto max-w-7xl relative z-10">
+
+		{/* ── Header ── */}
 		<motion.div
 		  initial={{ opacity: 0, y: 30 }}
 		  whileInView={{ opacity: 1, y: 0 }}
-		  transition={{ duration: 0.8 }}
+		  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
 		  viewport={{ once: true }}
-		  className="mb-20 text-center"
+		  className="mb-16"
 		>
-		  <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-brand-yellow">
-			{isAr ? "ما نقدمه لك" : "WHAT WE OFFER"}
-		  </p>
-		  <h2 className="text-4xl font-black text-white md:text-5xl font-serif">
-			{isAr ? "حلول تقنية تنبض بالحياة" : "Tech Solutions with a Heartbeat"}
+		  <div className="flex items-center gap-3 mb-4">
+			<div className="h-px w-10 bg-brand-gold" />
+			<span className="tag-gold">
+			  {isAr ? 'ما نقدمه لك' : 'What We Offer'}
+			</span>
+		  </div>
+		  <h2
+			className="text-4xl md:text-5xl lg:text-6xl mb-5 max-w-xl"
+			style={{ color: 'var(--text)', fontFamily: 'var(--font-display)' }}
+		  >
+			{isAr ? 'حلول تقنية تنبض بالحياة' : 'Tech Solutions with a Heartbeat'}
 		  </h2>
-		  <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-400 font-light">
-			{isAr 
-			  ? "صممنا حزم أوبريكس لتكون مرنة؛ يمكنك استخدامها كحزمة متكاملة أو كنظام مستقل، لتناسب احتياجك الحالي بالضبط."
-			  : "We designed OPERIX modules to be flexible; use them as a bundled ecosystem or standalone systems, fitting your exact needs."}
+		  <p
+			className="max-w-2xl text-base md:text-lg leading-relaxed"
+			style={{ color: 'var(--text-muted)', fontWeight: 500 }}
+		  >
+			{isAr
+			  ? 'صممنا حزم أوبريكس لتكون مرنة؛ يمكنك استخدامها كحزمة متكاملة أو كنظام مستقل، لتناسب احتياجك الحالي بالضبط.'
+			  : 'We designed OPERIX modules to be flexible — use them as a bundled ecosystem or standalone systems, fitting your exact current needs.'}
 		  </p>
 		</motion.div>
 
-		<div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-		  {services.map((service, index) => {
-			const Icon = service.icon;
+		{/* ── Cards ── */}
+		<div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+		  {items.map((service, i) => {
+			const Icon  = service.icon;
+			const isHov = hovered === i;
+
 			return (
 			  <motion.div
 				key={service.title}
-				initial={{ opacity: 0, y: 40 }}
+				initial={{ opacity: 0, y: 36 }}
 				whileInView={{ opacity: 1, y: 0 }}
-				transition={{ delay: index * 0.1, duration: 0.5 }}
+				transition={{ delay: i * 0.09, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
 				viewport={{ once: true }}
-				className="group relative overflow-hidden rounded-3xl border border-royal-border bg-royal-surface p-8 transition duration-500 hover:-translate-y-2 hover:border-brand-yellow/40 hover:shadow-[0_10px_40px_rgba(234,179,8,0.05)]"
+				onMouseEnter={() => setHovered(i)}
+				onMouseLeave={() => setHovered(null)}
+				className="group relative overflow-hidden rounded-2xl border p-7"
+				style={{
+				  background:  'var(--surface)',
+				  borderColor: isHov ? `${service.accent}40` : 'var(--border)',
+				  transform:   isHov ? 'translateY(-3px)' : 'translateY(0)',
+				  boxShadow:   isHov
+					? `0 16px 48px rgba(${service.accentRgb},0.1)`
+					: 'none',
+				  transition:  'all 0.32s cubic-bezier(0.16, 1, 0.3, 1)',
+				}}
 			  >
-				<div className="absolute inset-0 bg-gradient-to-br from-brand-yellow/0 to-brand-yellow/5 opacity-0 transition group-hover:opacity-100" />
+				{/* Radial glow overlay */}
+				<div
+				  className="absolute inset-0 pointer-events-none transition-opacity duration-400"
+				  style={{
+					background: `radial-gradient(ellipse 70% 50% at 50% 0%, rgba(${service.accentRgb},0.07) 0%, transparent 70%)`,
+					opacity:    isHov ? 1 : 0,
+				  }}
+				/>
+
+				{/* Gradient wash on hover */}
+				<div
+				  className="absolute inset-0 pointer-events-none transition-opacity duration-400"
+				  style={{
+					background: `linear-gradient(135deg, rgba(${service.accentRgb},0.04) 0%, transparent 60%)`,
+					opacity:    isHov ? 1 : 0,
+				  }}
+				/>
+
 				<div className="relative z-10">
-				  <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-yellow/10 text-brand-yellow">
-					<Icon size={32} />
+				  {/* Icon */}
+				  <div
+					className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl transition-all duration-300"
+					style={{
+					  background: isHov
+						? `rgba(${service.accentRgb},0.15)`
+						: 'var(--surface-2)',
+					  border: `1px solid ${isHov ? `rgba(${service.accentRgb},0.3)` : 'var(--border)'}`,
+					}}
+				  >
+					<Icon
+					  size={26}
+					  style={{ color: service.accent }}
+					/>
 				  </div>
-				  <h3 className="mb-4 text-2xl font-bold text-white">
+
+				  <h3
+					className="mb-3 text-base font-bold leading-snug transition-colors duration-200"
+					style={{ color: isHov ? service.accent : 'var(--text)' }}
+				  >
 					{service.title}
 				  </h3>
-				  <p className="leading-relaxed text-gray-400 font-medium">
+
+				  <p
+					className="text-sm leading-relaxed"
+					style={{ color: 'var(--text-muted)' }}
+				  >
 					{service.description}
 				  </p>
 				</div>

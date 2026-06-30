@@ -1,126 +1,224 @@
 import React from 'react';
-import { Mail, Phone, MapPin, MessageCircle, AtSign, Globe } from 'lucide-react';
+import { Mail, Phone, MapPin, MessageCircle, AtSign, Globe, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
-// Custom Social SVGs
-const YTIcon = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>);
-const XIcon = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768m2.46-2.46l6.772-6.772"/></svg>);
-const FBIcon = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>);
-const IGIcon = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>);
+/* ── Custom Social Icons ── */
+const YTIcon  = () => (<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>);
+const XIcon   = () => (<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768m2.46-2.46l6.772-6.772"/></svg>);
+const FBIcon  = () => (<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>);
+const IGIcon  = () => (<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>);
+const WAIcon  = () => (<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>);
 
 export default function Footer() {
   const { isAr } = useLanguage();
 
   const contacts = [
-	{ email: 'info@operix-solutions.com', loc: 'Riyadh, SA & Khartoum, SD', label: isAr ? 'المقر الرئيسي' : 'Headquarters' },
-	{ email: 'support@operix-solutions.com', loc: 'Riyadh, SA & Khartoum, SD', label: isAr ? 'الدعم التقني' : 'Technical Support' },
-	{ email: 'subscription@operix-solutions.com', loc: 'Riyadh, SA & Khartoum, SD', label: isAr ? 'الاشتراكات' : 'Subscriptions' },
-	{ email: 'sudan.office@operix-solutions.com', loc: 'Khartoum, Sudan', label: isAr ? 'المكتب السوداني' : 'Sudan Office' },
+	{ email: 'info@operix-solutions.com',         label: isAr ? 'المقر الرئيسي'    : 'Headquarters',      loc: 'Riyadh, SA · Khartoum, SD' },
+	{ email: 'support@operix-solutions.com',      label: isAr ? 'الدعم التقني'     : 'Technical Support', loc: 'Riyadh, SA · Khartoum, SD' },
+	{ email: 'subscription@operix-solutions.com', label: isAr ? 'الاشتراكات'       : 'Subscriptions',     loc: 'Riyadh, SA · Khartoum, SD' },
+	{ email: 'sudan.office@operix-solutions.com', label: isAr ? 'المكتب السوداني'  : 'Sudan Office',      loc: 'Khartoum, Sudan'           },
   ];
 
   const socials = [
-	{ href: 'https://whatsapp.com/channel/0029VbCjmxEChq6KQEBPiX1C', Icon: MessageCircle, bg: 'bg-[#25D366]', title: 'WhatsApp Channel' },
-	{ href: 'https://wa.me/966500823643', Icon: Phone, bg: 'bg-[#128C7E]', title: 'WhatsApp Business' },
-	{ href: 'https://x.com/operixsolutions?s=11', Icon: XIcon, bg: 'bg-black border border-vercel-border', title: 'X (Twitter)' },
-	{ href: 'https://www.facebook.com/share/1BoQkRsiJB/', Icon: FBIcon, bg: 'bg-[#1877F2]', title: 'Facebook' },
-	{ href: 'https://www.instagram.com/operix.solutions/', Icon: IGIcon, bg: 'bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888]', title: 'Instagram' },
-	{ href: 'https://www.youtube.com/@Operix.Solutions', Icon: YTIcon, bg: 'bg-[#FF0000]', title: 'YouTube' },
-	{ href: 'https://www.threads.com/@operix.solutions', Icon: AtSign, bg: 'bg-black border border-vercel-border', title: 'Threads' },
+	{ href: 'https://whatsapp.com/channel/0029VbCjmxEChq6KQEBPiX1C', Icon: WAIcon,        bg: '#25D366',  title: 'WhatsApp Channel'  },
+	{ href: 'https://wa.me/966500823643',                            Icon: Phone,          bg: '#128C7E',  title: 'WhatsApp Business' },
+	{ href: 'https://x.com/operixsolutions?s=11',                    Icon: XIcon,          bg: '#1A1A2E',  title: 'X (Twitter)'       },
+	{ href: 'https://www.facebook.com/share/1BoQkRsiJB/',            Icon: FBIcon,         bg: '#1877F2',  title: 'Facebook'          },
+	{ href: 'https://www.instagram.com/operix.solutions/',            Icon: IGIcon,         bg: 'none',     title: 'Instagram'         },
+	{ href: 'https://www.youtube.com/@Operix.Solutions',              Icon: YTIcon,         bg: '#EF4444',  title: 'YouTube'           },
+	{ href: 'https://www.threads.com/@operix.solutions',              Icon: AtSign,         bg: '#1A1A2E',  title: 'Threads'           },
   ];
 
-  // Fast direct links matching the Header
   const quickLinks = [
-	{ path: '/', labelEn: 'Home', labelAr: 'الرئيسية' },
-	{ path: '/about', labelEn: 'About', labelAr: 'من نحن' },
+	{ path: '/',         labelEn: 'Home',     labelAr: 'الرئيسية' },
+	{ path: '/about',    labelEn: 'About',    labelAr: 'من نحن'   },
 	{ path: '/services', labelEn: 'Services', labelAr: 'خدماتنا' },
-	{ path: '/products', labelEn: 'Products', labelAr: 'منتجاتنا' },
-	{ path: '/contact', labelEn: 'Contact', labelAr: 'تواصل' },
+	{ path: '/products', labelEn: 'Products', labelAr: 'منتجاتنا'},
+	{ path: '/contact',  labelEn: 'Contact',  labelAr: 'تواصل'    },
   ];
 
   return (
-	<footer className="w-full bg-vercel-surface border-t border-vercel-border transition-colors duration-500">
+	<footer
+	  className="w-full border-t"
+	  style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
+	>
+	  {/* Top divider accent */}
+	  <div className="h-px bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent" />
+
 	  <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-10">
-		<div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-		  
-		  {/* Brand & Contacts (Adjusted to col-span-4 to make room for links) */}
-		  <div className="lg:col-span-4 space-y-8">
-			<Link to="/" className="text-2xl font-black tracking-tighter flex items-center gap-1">
-			  <span className="text-vercel-surface-text">OPERIX</span> 
-			  <span className="text-brand-yellow drop-shadow-[0_0_10px_rgba(250,204,21,0.3)]">249</span>
-			</Link>
-			<p className="text-sm text-vercel-muted leading-relaxed font-medium max-w-md">
-			  {isAr 
-				? 'مجموعة قيادة مؤسسية موحدة تنسق العمليات، المسارات الطبية، ودورات حياة رأس المال البشري في مركز تحكم واحد.' 
-				: 'A unified enterprise command suite coordinating operations, medical workflows, and human capital life-cycles into a singular control core.'} 
-			</p>
-			<div className="space-y-4">
-			  {contacts.map(({ email, loc, label }) => (
-				<div key={email} className="group">
-				  <span className="text-[10px] font-black uppercase tracking-widest text-brand-yellow/80">{label}</span>
-				  <a href={`mailto:${email}`} className="flex items-center gap-2 text-sm font-mono text-vercel-surface-text hover:text-brand-yellow transition-colors mt-1">
-					<Mail size={14} className="text-brand-yellow/80" /> {email}
+		<div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+		  {/* ── Brand & Contacts ── */}
+		  <div className="lg:col-span-5 space-y-8">
+			<div>
+			  <Link to="/" className="inline-flex items-center gap-1 mb-3">
+				<span
+				  className="text-2xl font-bold"
+				  style={{ color: 'var(--text)', fontFamily: 'var(--font-display)' }}
+				>
+				  OPERIX
+				</span>
+				<span
+				  className="text-2xl font-bold"
+				  style={{
+					fontFamily: 'var(--font-display)',
+					background: 'linear-gradient(135deg,#D4AF37,#F5A623)',
+					WebkitBackgroundClip: 'text',
+					WebkitTextFillColor: 'transparent',
+					backgroundClip: 'text',
+				  }}
+				>
+				  249
+				</span>
+			  </Link>
+			  <p
+				className="text-sm leading-relaxed max-w-sm"
+				style={{ color: 'var(--text-muted)', fontWeight: 500 }}
+			  >
+				{isAr
+				  ? 'مجموعة قيادة مؤسسية موحدة تنسق العمليات، المسارات الطبية، ودورات حياة رأس المال البشري في مركز تحكم واحد.'
+				  : 'A unified enterprise command suite coordinating operations, medical workflows, and human capital lifecycles into a singular control core.'}
+			  </p>
+			</div>
+
+			{/* Contact list */}
+			<div className="space-y-5">
+			  {contacts.map(({ email, label, loc }) => (
+				<div key={email}>
+				  <span
+					className="text-[10px] font-black uppercase tracking-[0.2em]"
+					style={{ color: '#D4AF37' }}
+				  >
+					{label}
+				  </span>
+				  <a
+					href={`mailto:${email}`}
+					className="flex items-center gap-2 text-sm font-mono mt-1 transition-colors duration-200"
+					style={{ color: 'var(--text)' }}
+					onMouseEnter={(e) => (e.currentTarget.style.color = '#D4AF37')}
+					onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text)')}
+				  >
+					<Mail size={13} style={{ color: '#D4AF37', opacity: 0.8, flexShrink: 0 }} />
+					{email}
 				  </a>
 				  <div className="flex items-center gap-1.5 mt-1 pl-5">
-					<MapPin size={12} className="text-vercel-muted" />
-					<span className="text-[10px] font-bold uppercase tracking-wider text-vercel-muted">{loc}</span>
+					<MapPin size={11} style={{ color: 'var(--text-subtle)', flexShrink: 0 }} />
+					<span
+					  className="text-[10px] font-semibold uppercase tracking-wider"
+					  style={{ color: 'var(--text-subtle)' }}
+					>
+					  {loc}
+					</span>
 				  </div>
 				</div>
 			  ))}
 			</div>
 		  </div>
 
-		  {/* Quick Links */}
-		  <div className="lg:col-span-3 space-y-6 lg:pl-8">
-			<h4 className="text-[10px] font-black uppercase tracking-[0.25em] text-brand-yellow">
-			  {isAr ? 'روابط سريعة' : 'QUICK LINKS'}
+		  {/* ── Quick Links ── */}
+		  <div className="lg:col-span-2 space-y-6">
+			<h4
+			  className="text-[10px] font-black uppercase tracking-[0.2em]"
+			  style={{ color: '#D4AF37' }}
+			>
+			  {isAr ? 'روابط سريعة' : 'Quick Links'}
 			</h4>
-			<div className="flex flex-col space-y-4">
-			  {quickLinks.map((link, idx) => (
-				<Link 
-				  key={idx} 
-				  to={link.path} 
-				  className="text-sm font-bold text-vercel-muted hover:text-brand-yellow transition-colors w-fit flex items-center gap-2"
+			<nav className="flex flex-col gap-3">
+			  {quickLinks.map((link) => (
+				<Link
+				  key={link.path}
+				  to={link.path}
+				  className="group flex items-center gap-2 text-sm font-semibold w-fit transition-colors duration-200"
+				  style={{ color: 'var(--text-muted)' }}
+				  onMouseEnter={(e) => (e.currentTarget.style.color = '#D4AF37')}
+				  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
 				>
-				  <div className="w-1.5 h-1.5 rounded-full bg-brand-yellow/50"></div>
+				  <ArrowUpRight
+					size={13}
+					className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0"
+					style={{ color: '#D4AF37' }}
+				  />
 				  {isAr ? link.labelAr : link.labelEn}
 				</Link>
 			  ))}
-			</div>
+			</nav>
 		  </div>
 
-		  {/* Social Links & Status */}
-		  <div className="lg:col-span-5 flex flex-col items-start lg:items-end justify-between">
-			<div className="w-full lg:text-right">
-			  <h4 className="text-[10px] font-black uppercase tracking-[0.25em] text-brand-yellow mb-4">
-				{isAr ? 'التواصل الاجتماعي' : 'SOCIAL CONNECT'}
+		  {/* ── Social + Status ── */}
+		  <div className="lg:col-span-5 flex flex-col gap-8">
+			<div>
+			  <h4
+				className="text-[10px] font-black uppercase tracking-[0.2em] mb-5"
+				style={{ color: '#D4AF37' }}
+			  >
+				{isAr ? 'التواصل الاجتماعي' : 'Social Connect'}
 			  </h4>
-			  <div className="flex flex-wrap gap-3 lg:justify-end">
+			  <div className="flex flex-wrap gap-2.5">
 				{socials.map(({ href, Icon, bg, title }, idx) => (
-				  <a key={idx} href={href} target="_blank" rel="noreferrer" title={title} className={`w-10 h-10 flex items-center justify-center rounded-xl shadow-lg text-white hover:scale-110 hover:-translate-y-1 transition-all duration-300 ${bg}`}>
+				  <motion.a
+					key={idx}
+					href={href}
+					target="_blank"
+					rel="noreferrer"
+					title={title}
+					whileHover={{ scale: 1.1, y: -2 }}
+					whileTap={{ scale: 0.95 }}
+					className="w-10 h-10 flex items-center justify-center rounded-xl text-white shadow-md transition-shadow duration-300 hover:shadow-lg"
+					style={{
+					  background:
+						bg === 'none'
+						  ? 'linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)'
+						  : bg,
+					}}
+				  >
 					<Icon />
-				  </a>
+				  </motion.a>
 				))}
 			  </div>
 			</div>
 
-			<div className="mt-10 lg:mt-0 flex flex-col sm:flex-row items-center gap-4 text-xs font-semibold text-vercel-muted">
-			  <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-900/10 border border-emerald-500/20 text-emerald-500">
-				<span className="relative flex h-2 w-2 shrink-0">
-				  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-				  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-				</span>
+			{/* System status */}
+			<div
+			  className="flex items-center gap-2 px-4 py-3 rounded-xl self-start"
+			  style={{
+				background: 'rgba(16, 185, 129, 0.08)',
+				border: '1px solid rgba(16, 185, 129, 0.2)',
+			  }}
+			>
+			  <span className="relative flex h-2 w-2 shrink-0">
+				<span
+				  className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+				  style={{ background: '#10B981' }}
+				/>
+				<span
+				  className="relative inline-flex rounded-full h-2 w-2"
+				  style={{ background: '#10B981' }}
+				/>
+			  </span>
+			  <span className="text-xs font-bold" style={{ color: '#10B981' }}>
 				{isAr ? 'جميع الأنظمة تعمل' : 'All Systems Operational'}
-			  </div>
-			  
-			  {/* Updated Copyright string */}
-			  <p className="text-center sm:text-left">
-				&copy; {new Date().getFullYear()} {isAr ? 'جميع حقوق الطبع والنشر محفوظة. أوبيركس سوليوشنز.' : 'All copyrights reserved. OPERIX Solutions.'}
-			  </p>
-			  <Globe size={14} className="text-brand-yellow hidden sm:block" />
+			  </span>
 			</div>
 		  </div>
-		  
+		</div>
+
+		{/* ── Bottom bar ── */}
+		<div
+		  className="mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold"
+		  style={{ borderTop: '1px solid var(--border)', color: 'var(--text-subtle)' }}
+		>
+		  <p>
+			&copy; {new Date().getFullYear()}{' '}
+			{isAr
+			  ? 'جميع حقوق الطبع والنشر محفوظة — أوبيركس سوليوشنز'
+			  : 'All rights reserved — OPERIX Solutions'}
+		  </p>
+		  <div className="flex items-center gap-1.5">
+			<Globe size={13} style={{ color: '#D4AF37' }} />
+			<span>operix-solutions.com</span>
+		  </div>
 		</div>
 	  </div>
 	</footer>
